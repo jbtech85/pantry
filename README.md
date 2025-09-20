@@ -1,3 +1,9 @@
+# Pantry - let nothing go to waste
+The goal of this app is to use all the food in your cupboards before it goes bad.  Less food wasted, more money saved.
+
+
+
+#### This stuff seems important, so we'll save for later
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

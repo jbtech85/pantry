@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Navbar from './components/Navbar'
+import Navbar from './components/Navbar/Navbar'
 
 function App() {
 // TODO: Add dark mode
@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <h1>Pantry App 2025</h1>
+      <h1 className="text-4xl">Pantry App 2025</h1>
     </>
   )
 }
