@@ -1,15 +1,25 @@
-import { useState } from 'react'
-import Navbar from './components/Navbar/Navbar'
+import { appStyles } from "./assets/styles/StyleIndex";
+import Pantry from "./components/Pantry/Pantry";
+import GroceryList from "./components/GroceryList/GroceryList";
+import Header from "./components/Header/Header";
 
 function App() {
-// TODO: Add dark mode
-
+  // TODO: Add dark mode
   return (
-    <>
-      <Navbar />
-      <h1 className="text-4xl">Pantry App 2025</h1>
-    </>
-  )
+    <div style={appStyles}>
+      <Header
+      <h1 className="text-3xl">Pantry App 2025</h1>
+
+      {/* Want to display different pages
+        - Pantry - Add ingredients to pantry, see ingredients in pantry, 
+        - Grocery List - Add ingredients to grocery list, see ingredients on grocery list
+
+      */}
+
+      <Pantry />
+      <GroceryList />
+    </div>
+  );
 }
 
-export default App
+export default App;

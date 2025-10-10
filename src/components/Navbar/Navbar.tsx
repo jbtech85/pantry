@@ -1,6 +1,14 @@
+
+
 const Navbar = () => {
+  
+
   return (
-    <nav>Navbar</nav>
+    <>
+      <nav>
+        Pantry
+      </nav>
+    </>
   )
 }
 export default Navbar
