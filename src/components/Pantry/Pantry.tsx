@@ -1,5 +1,7 @@
+import { useState } from "react"
 import IngredientForm from "../IngredientForm/IngredientForm"
 import IngredientList from "../IngredientList/IngredientList"
+import { useQuery } from "@tanstack/react-query"
 
 const pantrySectionStyle = {
   padding: "0px 30px",
@@ -9,6 +11,24 @@ const pantrySectionStyle = {
 }
 
 const Pantry = () => {
+
+  const [pantryList, setPantryList] = useState({});
+
+  const query = useQuery({
+    queryKey: ["pantryItems"],
+    queryFn: async () => {
+      const response = await fetch('src/components/IngredientList/tempIngredients.json');
+      if(!response.ok){
+        throw new Error("Network response failed");
+      }
+      return response.json();
+    }
+  })
+  
+  console.log(query.data);
+
+  
+    
   return (
     <div style={pantrySectionStyle}>Pantry Section
 

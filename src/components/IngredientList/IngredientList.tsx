@@ -28,7 +28,7 @@ const listButtonStyle = {
 const IngredientList = () => {
   return (
     <ul>
-      {tempIngredients.map((ingredient: ingredientType) => (
+      {tempIngredients.ingredients.map((ingredient: ingredientType) => (
         <li key={ingredient.id} style={liIngredientStyle}>
           {/* 
             -- when clicking delete, if item is not on grocery list give prompt() to add.

@@ -11,17 +11,16 @@ function App() {
 
   return (
     <div style={appStyles}>
-      <Header />
       <h1 className="text-3xl">Pantry App 2025</h1>
+      <Header />
 
-      {/* Want to display different pages
+      {/* 
+        -- display different pages
         - Pantry - Add ingredients to pantry, see ingredients in pantry, 
         - Grocery List - Add ingredients to grocery list, see ingredients on grocery list
 
       */}
 
-      <Pantry />
-      <GroceryList />
     </div>
   );
 }

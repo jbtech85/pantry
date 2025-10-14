@@ -15,8 +15,9 @@ const Header = () => {
   return (
     <>
       <img src={logo} height={150} alt="pantry logo" />
-      <Navbar />
       <GiAbstract076 style={giAbstract076Style}/><button onClick={() => setIsAuthed(!isAuthed)}>{isAuthed ? "Log out" : "Log in"}</button>
+      {/* Putting react-router in Navbar made it the whole app, for now */}
+      <Navbar />
     </>
   )
 }
