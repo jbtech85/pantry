@@ -14,7 +14,7 @@ const Pantry = () => {
 
   const [pantryList, setPantryList] = useState({});
 
-  const query = useQuery({
+  const { isLoading, isError, data, error } = useQuery({
     queryKey: ["pantryItems"],
     queryFn: async () => {
       const response = await fetch('src/components/IngredientList/tempIngredients.json');
@@ -25,7 +25,22 @@ const Pantry = () => {
     }
   })
   
-  console.log(query.data);
+  if(isLoading) {
+    return <div>Loading...</div>
+  }
+
+  if(isError) {
+    return (
+      <div>
+        Error
+        Message: {error.message}
+        Name: {error.name}
+        Stack: {error.stack}
+      </div>
+    )
+  }
+
+  console.log(data);
 
   
     
