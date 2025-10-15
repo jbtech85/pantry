@@ -12,23 +12,44 @@ const pantrySectionStyle = {
 
 const Pantry = () => {
 
-  const [pantryList, setPantryList] = useState({});
-
+  
   const { isLoading, isError, data, error } = useQuery({
     queryKey: ["pantryItems"],
     queryFn: async () => {
-      const response = await fetch('src/components/IngredientList/tempIngredients.json');
+      const response = await fetch('tempIngredients.json');
       if(!response.ok){
         throw new Error("Network response failed");
       }
       return response.json();
     }
   })
+
+
+  console.log(data);
+  const [pantryList, setPantryList] = useState({});
+  
+  const addToPantryList = (items) => {
+    setPantryList(prev => ({
+      ...prev,
+      items
+    }))
+  }
+
+
+  let pantryItems = null;
+  if(!isLoading){
+     pantryItems = data.ingredients.filter((item) => item.inPantry);
+    //  addToPantryList(pantryItems);
+  }
+  
+
+
+
   
   if(isLoading) {
     return <div>Loading...</div>
   }
-
+  
   if(isError) {
     return (
       <div>
@@ -39,16 +60,13 @@ const Pantry = () => {
       </div>
     )
   }
-
-  console.log(data);
-
   
-    
+  
   return (
     <div style={pantrySectionStyle}>Pantry Section
 
       <IngredientForm />
-      <IngredientList section="pantry" />
+      <IngredientList items={pantryItems} />
     </div>
   )
 }
