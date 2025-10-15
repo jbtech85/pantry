@@ -1,6 +1,4 @@
 import { appStyles } from "./assets/styles/StyleIndex";
-import Pantry from "./components/Pantry/Pantry";
-import GroceryList from "./components/GroceryList/GroceryList";
 import Header from "./components/Header/Header";
 import { useState } from "react";
 
