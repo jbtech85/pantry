@@ -25,6 +25,7 @@ const listButtonStyle = {
 }
 
 const IngredientList = ({items}) => {
+  console.log(items)
   return (
     <ul>
       {items.map((ingredient: ingredientType) => (

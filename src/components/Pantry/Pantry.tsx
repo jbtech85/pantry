@@ -2,21 +2,15 @@ import { useState } from "react"
 import IngredientForm from "../IngredientForm/IngredientForm"
 import IngredientList from "../IngredientList/IngredientList"
 import { useQuery } from "@tanstack/react-query"
+import { pantrySectionStyle } from './PantryStyles'
 
-const pantrySectionStyle = {
-  padding: "0px 30px",
-  background: "hsla(31, 92%, 90%, 1.00)",
-  color: "hsl(17, 41%, 34%)",
-  fontSize: "20px"
-}
 
 const Pantry = () => {
-
-  
-  const { isLoading, isError, data, error } = useQuery({
+  // Grab data from our data source via Tanstack
+  const pantryQry = useQuery({
     queryKey: ["pantryItems"],
     queryFn: async () => {
-      const response = await fetch('tempIngredients.json');
+      const response = await fetch('http://localhost:4100/ingredients?inPantry=true');
       if(!response.ok){
         throw new Error("Network response failed");
       }
@@ -24,49 +18,40 @@ const Pantry = () => {
     }
   })
 
+  type pantryItemType = {
+    id: number,
+    name: string,
+    inPantry: boolean,
+    onGroceryList: boolean
+  };
 
-  console.log(data);
-  const [pantryList, setPantryList] = useState({});
+  type pantryItemsType = pantryItemType[];
   
-  const addToPantryList = (items) => {
-    setPantryList(prev => ({
-      ...prev,
-      items
-    }))
-  }
-
-
-  let pantryItems = null;
-  if(!isLoading){
-     pantryItems = data.ingredients.filter((item) => item.inPantry);
-    //  addToPantryList(pantryItems);
-  }
-  
-
-
-
-  
-  if(isLoading) {
+  if(pantryQry.isLoading) {
     return <div>Loading...</div>
   }
   
-  if(isError) {
+  if(pantryQry.isError) {
     return (
       <div>
         Error
-        Message: {error.message}
-        Name: {error.name}
-        Stack: {error.stack}
+        Message: {pantryQry.data.error.message}
+        Name: {pantryQry.data.error.name}
+        Stack: {pantryQry.data.error.stack}
       </div>
     )
   }
   
-  
   return (
-    <div style={pantrySectionStyle}>Pantry Section
+    <div style={pantrySectionStyle}>
+      Pantry Section
 
       <IngredientForm />
-      <IngredientList items={pantryItems} />
+      
+      
+      {!pantryQry.isLoading &&
+        <IngredientList items={pantryQry.data} />
+      }
     </div>
   )
 }
