@@ -1,9 +1,7 @@
-import { useState } from "react"
 import IngredientForm from "../IngredientForm/IngredientForm"
 import IngredientList from "../IngredientList/IngredientList"
 import { useQuery } from "@tanstack/react-query"
 import { pantrySectionStyle } from './PantryStyles'
-
 
 const Pantry = () => {
   // Grab data from our data source via Tanstack
@@ -47,7 +45,6 @@ const Pantry = () => {
       Pantry Section
 
       <IngredientForm />
-      
       
       {!pantryQry.isLoading &&
         <IngredientList items={pantryQry.data} />

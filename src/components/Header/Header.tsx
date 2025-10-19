@@ -7,17 +7,42 @@ import { GiAbstract076 } from "react-icons/gi";
 const Header = () => {
   const[isAuthed, setIsAuthed] = useState(false);
 
+  const headerStyle = {
+    display: "flex",
+    justifyContent: "space-between"
+  }
+
+  const loginStyle = {
+    display: "flex",
+    alignItems: "center"
+  }
+
   const giAbstract076Style = {
-    fontSize: "36px",
-    color: "hsl(28 100% 43%)"
+    color: "hsl(28 100% 43%)",
+    fontSize: "36px"
+  }
+
+  const buttonStyle = {
+    background: "hsl(10 85% 53% / 80%)",
+    border: "none",
+    borderRadius: "10%",
+    color: "hsl(180 100% 97%",
+    fontFamily: "Trebuchet, sans-serif",
+    fontWeight: "bold",
+    margin: "5px",
+    padding: "10px 20px"
   }
 
   return (
     <>
-      <img src={logo} height={150} alt="pantry logo" />
-      <GiAbstract076 style={giAbstract076Style}/><button onClick={() => setIsAuthed(!isAuthed)}>{isAuthed ? "Log out" : "Log in"}</button>
-      {/* Putting react-router in Navbar made it the whole app, for now */}
-      <Navbar />
+      <div style={headerStyle}>
+        <img src={logo} height={100} alt="pantry logo" />
+
+        <div style={loginStyle}>
+          <button style={buttonStyle} onClick={() => setIsAuthed(!isAuthed)}>{isAuthed ? "Log out" : "Log in"}</button>
+        </div>
+      </div>
+      {/* <Navbar /> */}
     </>
   )
 }
