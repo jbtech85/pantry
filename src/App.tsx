@@ -1,26 +1,21 @@
-import { appStyles } from "./assets/styles/StyleIndex";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Header from "./components/Header/Header";
-import { useState } from "react";
+import HomePage from "./pages/HomePage"
+
+const routes = [{
+  path: '/',
+  element: <HomePage />
+}]
+
+const router = createBrowserRouter(routes);
 
 function App() {
-  // TODO: Add dark mode
-
-  const[isAuthed, setIsAuthed] = useState(false);
-
   return (
-    <div style={appStyles}>
-      <h1 className="text-3xl">Pantry App 2025</h1>
+    <>
       <Header />
-
-      {/* 
-        -- display different pages
-        - Pantry - Add ingredients to pantry, see ingredients in pantry, 
-        - Grocery List - Add ingredients to grocery list, see ingredients on grocery list
-
-      */}
-
-    </div>
+      <RouterProvider router={router} />
+    </>
   );
 }
 
-export default App;
+export default App
