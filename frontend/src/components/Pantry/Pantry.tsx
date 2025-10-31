@@ -3,15 +3,17 @@ import IngredientList from "../IngredientList/IngredientList"
 import { useQuery } from "@tanstack/react-query"
 import { pantrySectionStyle } from './PantryStyles'
 
-const Pantry = () => {
+const Pantry = (household_id) => {
   // Grab data from our data source via Tanstack
   const pantryQry = useQuery({
     queryKey: ["pantryItems"],
     queryFn: async () => {
-      const serveJsonIngredients = "http://localhost:4100/ingredients?inPantry=true"
 
 
-      let fetchedIngredients = serveJsonIngredients;
+      const serveJsonIngredients = "http://localhost:4100/ingredients?inPantry=true";
+      const mongoIngredients = `/api/household/${household_id}/items`;
+
+      let fetchedIngredients = mongoIngredients;
       const response = await fetch(fetchedIngredients);
       if(!response.ok){
         throw new Error("Network response failed");

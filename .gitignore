@@ -24,6 +24,6 @@ dist-ssr
 
 notes
 
-/database
-/backend/node_modules
-/frontend/node_modules
+database
+backend
+frontend/node_modules
