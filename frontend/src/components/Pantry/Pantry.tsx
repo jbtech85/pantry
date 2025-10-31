@@ -8,7 +8,11 @@ const Pantry = () => {
   const pantryQry = useQuery({
     queryKey: ["pantryItems"],
     queryFn: async () => {
-      const response = await fetch('http://localhost:4100/ingredients?inPantry=true');
+      const serveJsonIngredients = "http://localhost:4100/ingredients?inPantry=true"
+
+
+      let fetchedIngredients = serveJsonIngredients;
+      const response = await fetch(fetchedIngredients);
       if(!response.ok){
         throw new Error("Network response failed");
       }
@@ -30,14 +34,7 @@ const Pantry = () => {
   }
   
   if(pantryQry.isError) {
-    return (
-      <div>
-        Error
-        Message: {pantryQry.data.error.message}
-        Name: {pantryQry.data.error.name}
-        Stack: {pantryQry.data.error.stack}
-      </div>
-    )
+    return console.error("No response from the network");
   }
   
   return (

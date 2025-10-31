@@ -1,5 +1,6 @@
 import { RiFilePaper2Line } from "react-icons/ri"
 import { TiDeleteOutline } from "react-icons/ti"
+import { liIngredientStyle, ingredientWrapperStyle, listButtonStyle } from "./IngredientListStyles"
 
 type ingredientType = {
     id: string;
@@ -8,21 +9,6 @@ type ingredientType = {
     onGroceryList: boolean;
 }
 
-const liIngredientStyle = {
-  borderBottom: "1px solid grey",
-  display: "flex",
-  padding: "10px 0px"
-}
-
-const ingredientWrapperStyle = {
-  flexGrow: "1",
-  display: "flex"
-}
-
-const listButtonStyle = {
-  fontSize: "26px",
-  padding: "0 20px"
-}
 
 const IngredientList = ({items}) => {
   console.log(items)
