@@ -9,6 +9,12 @@ export default defineConfig({
     react()
   ],
   server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:4100',
+        changeOrigin:true
+      }
+    },
     port: 5100
   }
 })
