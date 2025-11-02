@@ -1,25 +1,7 @@
-export const headerStyle = {
-  display: "flex",
-  justifyContent: "space-between"
-}
+import styled from 'styled-components';
 
-export const loginStyle = {
-  display: "flex",
-  alignItems: "center"
-}
+export const StyledHeader = styled.header`
+  display: flex;
+  justify-content: space-between;
 
-export const giAbstract076Style = {
-  color: "hsl(28 100% 43%)",
-  fontSize: "36px"
-}
-
-export const buttonStyle = {
-  background: "hsl(10 85% 53% / 80%)",
-  border: "none",
-  borderRadius: "10%",
-  color: "hsl(180 100% 97%",
-  fontFamily: "Trebuchet, sans-serif",
-  fontWeight: "bold",
-  margin: "5px",
-  padding: "10px 20px"
-}
+`;
