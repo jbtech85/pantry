@@ -1,6 +1,5 @@
 import { useParams, useLoaderData } from "react-router-dom"
 
-
 type keyValType = {
   [key: string]: string;
 }
@@ -9,6 +8,18 @@ type recipeInfoType = {
   meals: {
     0: keyValType[];
   }
+}
+
+type paramsType = {
+  params: {
+    name: string
+  }
+}
+
+
+export async function recipeLoader({ params }: paramsType) {
+  const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=' + params.name);
+  return response;
 }
 
 
@@ -61,3 +72,5 @@ export default function RecipePage() {
     </>
   )
 }
+
+

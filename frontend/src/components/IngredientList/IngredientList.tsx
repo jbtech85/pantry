@@ -1,6 +1,6 @@
 import { RiFilePaper2Line } from "react-icons/ri"
 import { TiDeleteOutline } from "react-icons/ti"
-import { liIngredientStyle, ingredientWrapperStyle, listButtonStyle } from "./IngredientListStyles"
+import { liIngredientStyle, ingredientWrapperStyle, listButtonStyle, IngredientLI } from "./IngredientListStyles"
 
 type ingredientType = {
     id: string;
@@ -15,7 +15,7 @@ const IngredientList = ({items}) => {
   return (
     <ul>
       {items.map((ingredient: ingredientType) => (
-        <li key={ingredient.id} style={liIngredientStyle}>
+        <IngredientLI key={ingredient.id}>
           {/* 
             -- when clicking delete, if item is not on grocery list give prompt() to add.
             -- in prompt, give options, with icons,"Add to Grocery List and remove" and "Remove"
@@ -34,7 +34,7 @@ const IngredientList = ({items}) => {
             </div>
           </div>
 
-        </li>
+        </IngredientLI>
       ))}
     </ul>
   )

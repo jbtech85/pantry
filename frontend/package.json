@@ -11,6 +11,7 @@
     "serve-json": "json-server --watch tempIngredients.json --port 4100"
   },
   "dependencies": {
+    "@fontsource/poppins": "^5.2.7",
     "@tailwindcss/vite": "^4.1.13",
     "@tanstack/react-query": "^5.90.5",
     "@tanstack/react-query-devtools": "^5.90.2",
@@ -19,6 +20,7 @@
     "react-dom": "^19.1.1",
     "react-icons": "^5.5.0",
     "react-router-dom": "^6.4",
+    "styled-components": "^6.1.19",
     "tailwindcss": "^4.1.13"
   },
   "devDependencies": {

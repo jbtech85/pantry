@@ -8,8 +8,6 @@ const Pantry = (household_id) => {
   const pantryQry = useQuery({
     queryKey: ["pantryItems"],
     queryFn: async () => {
-
-
       const serveJsonIngredients = "http://localhost:4100/ingredients?inPantry=true";
       const mongoIngredients = `/api/household/${household_id}/items`;
 

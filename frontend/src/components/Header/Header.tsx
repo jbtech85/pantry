@@ -1,27 +1,16 @@
-import { useState } from "react"
-import Navbar from "../Navbar/Navbar"
+
+import { StyledHeader } from "./HeaderStyles";
 import logo from "../../assets/images/pantryIconOne.png"
-// import LoginButton from "../LoginButton/LoginButton";
-import { GiAbstract076 } from "react-icons/gi";
-import { Link } from "react-router-dom";
-import { buttonStyle, headerStyle, loginStyle } from "./HeaderStyles";
+import Navbar from "../Navbar/Navbar"
+import LoginButton from "../LoginButton/LoginButton";
 
 const Header = () => {
-  const[isAuthed, setIsAuthed] = useState(false);
-
- 
   return (
-    <>
-      <div style={headerStyle}>
-        <img src={logo} height={100} alt="pantry logo" />
-
-        <div style={loginStyle}>
-          <button style={buttonStyle} onClick={() => setIsAuthed(!isAuthed)}>{isAuthed ? "Log out" : "Log in"}</button>
-        </div>
-      </div>
+    <StyledHeader>
+      <img src={logo} height={100} alt="pantry logo" />
       <Navbar />
-
-    </>
+      <LoginButton />
+    </StyledHeader>
   )
 }
 export default Header
