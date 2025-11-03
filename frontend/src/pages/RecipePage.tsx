@@ -1,4 +1,4 @@
-import { useParams, useLoaderData } from "react-router-dom"
+import { useParams, useLoaderData } from "react-router-dom";
 
 type keyValType = {
   [key: string]: string;

@@ -21,9 +21,9 @@ const routes = [{
     }, {
       path: '/recipes',
       element: <RecipeListPage />
-      
+
     }, {
-      path: '/recipes/list/:method/:param',
+      path: '/recipes/list/:filter/:filterId',
       element: <RecipeListPage />,
       loader: recipeListLoader
     }, {
