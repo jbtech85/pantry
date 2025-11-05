@@ -30,13 +30,13 @@ export default function RecipePage() {
 
 
   let dynamicVar: string = 'strMeal';
-  console.log(mealInfo[dynamicVar]);
+  // console.log(mealInfo[dynamicVar]);
 
-  console.log(mealInfo);
+  // console.log(mealInfo);
 
   const ingredients = Object.keys(mealInfo)
     .filter(function(ingredient) {
-      console.log(`a: ingredient is ${ingredient}, val is ${mealInfo[ingredient]} `);
+      // console.log(`a: ingredient is ${ingredient}, val is ${mealInfo[ingredient]} `);
       return (
         ingredient.indexOf('strIngredient') == 0 &&
         mealInfo[ingredient] != null &&
@@ -44,18 +44,18 @@ export default function RecipePage() {
       )
     })
     .filter((ingredient) => {
-      console.log(`b: ingredient is ${ingredient}, val is ${mealInfo[ingredient]} `);
+      // console.log(`b: ingredient is ${ingredient}, val is ${mealInfo[ingredient]} `);
       return mealInfo[ingredient] != null;
     })
     .reduce((ingredientData, ingredient) => {
-      console.log(`c: ingredient is ${ingredient}, val is ${mealInfo[ingredient]} `);
+      // console.log(`c: ingredient is ${ingredient}, val is ${mealInfo[ingredient]} `);
       return {
         ...ingredientData,
         [ingredient]: mealInfo[ingredient]
       };
     },{});
 
-  console.log(ingredients);
+  // console.log(ingredients);
 
 
   return (

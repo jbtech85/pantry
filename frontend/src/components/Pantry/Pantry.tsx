@@ -3,7 +3,11 @@ import IngredientList from "../IngredientList/IngredientList"
 import { useQuery } from "@tanstack/react-query"
 import { pantrySectionStyle } from './PantryStyles'
 
-const Pantry = (household_id) => {
+type PantryProps = {
+  household_id: string
+}
+
+const Pantry = ({household_id}: PantryProps) => {
   // Grab data from our data source via Tanstack
   const pantryQry = useQuery({
     queryKey: ["pantryItems"],

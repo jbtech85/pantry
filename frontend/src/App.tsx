@@ -19,11 +19,7 @@ const routes = [{
       path: '/grocery-list',
       element: <GroceryList />
     }, {
-      path: '/recipes',
-      element: <RecipeListPage />
-
-    }, {
-      path: '/recipes/list/:filter/:filterId',
+      path: '/recipes/:filter?/:filterId?',
       element: <RecipeListPage />,
       loader: recipeListLoader
     }, {
