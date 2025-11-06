@@ -23,6 +23,19 @@ async function connectToPantryItemsCollection() {
   pantryDB = client.db('pantry');
 }
 
+// create a household
+app.post('/api/household', async (req, res) => {
+  const { name, description, initialUser } = req.body;
+  const newHousehold = { 
+    name: name, 
+    description: description, 
+    users: [initialUser],
+    admin_users: [initialUser]
+  };
+  
+  const newHouseholdInfo = await pantryDB.collection('household').insertOne("newHousehold");
+})
+
 
 // look at a selected household's items
 app.get('/api/household/:household_id/items', async (req, res) => {
