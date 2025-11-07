@@ -7,7 +7,7 @@ const HomePage = () => {
       <h1 className="text-3xl">Pantry</h1>
       <p>A helper for using the food you already have.</p>
 
-      <Pantry />     
+      <Pantry household_id="1" />     
 
     </div>
   )

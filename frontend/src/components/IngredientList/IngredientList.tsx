@@ -1,6 +1,6 @@
 import { RiFilePaper2Line } from "react-icons/ri"
 import { TiDeleteOutline } from "react-icons/ti"
-import { liIngredientStyle, ingredientWrapperStyle, listButtonStyle, IngredientLI } from "./IngredientListStyles"
+import { ingredientWrapperStyle, listButtonStyle, IngredientLI } from "./IngredientListStyles"
 
 type ingredientType = {
     id: string;
