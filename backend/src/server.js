@@ -33,8 +33,9 @@ app.post('/api/household', async (req, res) => {
     admin_users: [initialUser]
   };
   
-  const newHouseholdInfo = await pantryDB.collection('household').insertOne("newHousehold");
-})
+  const newHouseholdInfo = await pantryDB.collection('household').insertOne(newHousehold);
+  res.send(newHouseholdInfo);
+});
 
 
 // look at a selected household's items
@@ -58,7 +59,7 @@ app.post('/api/household/:household_id/items', async (req, res) => {
   });
 
   const result = await pantryDB.collection('pantry_items').insertMany(items);
-  console.log(result);
+  // console.log(result);
   res.send(result);
 });
 

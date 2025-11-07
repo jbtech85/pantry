@@ -1,13 +1,22 @@
 import IngredientForm from "../IngredientForm/IngredientForm"
 import IngredientList from "../IngredientList/IngredientList"
 import { useQuery } from "@tanstack/react-query"
-import { pantrySectionStyle } from './PantryStyles'
+import { PantrySection, pantrySectionStyle } from './Pantry.styles'
 
 type PantryProps = {
   household_id: string
 }
 
-const Pantry = ({household_id}: PantryProps) => {
+type pantryItemType = {
+  id: number,
+  name: string,
+  inPantry: boolean,
+  onGroceryList: boolean
+};
+
+type pantryItemsType = pantryItemType[];
+
+const Pantry: React.FC<PantryProps> = ({household_id}) => {
   // Grab data from our data source via Tanstack
   const pantryQry = useQuery({
     queryKey: ["pantryItems"],
@@ -24,33 +33,23 @@ const Pantry = ({household_id}: PantryProps) => {
     }
   })
 
-  type pantryItemType = {
-    id: number,
-    name: string,
-    inPantry: boolean,
-    onGroceryList: boolean
-  };
-
-  type pantryItemsType = pantryItemType[];
   
   if(pantryQry.isLoading) {
     return <div>Loading...</div>
   }
   
   if(pantryQry.isError) {
-    return console.error("No response from the network");
+    return <div>Error: {pantryQry.error.message}</div>;
   }
   
   return (
-    <div style={pantrySectionStyle}>
-      Pantry Section
-
+    <PantrySection>
       <IngredientForm />
       
       {!pantryQry.isLoading &&
         <IngredientList items={pantryQry.data} />
       }
-    </div>
+    </PantrySection>
   )
 }
 export default Pantry
