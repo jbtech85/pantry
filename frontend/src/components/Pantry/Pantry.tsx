@@ -1,7 +1,7 @@
 import IngredientForm from "../IngredientForm/IngredientForm"
 import IngredientList from "../IngredientList/IngredientList"
 import { useQuery } from "@tanstack/react-query"
-import { PantrySection, pantrySectionStyle } from './Pantry.styles'
+import { PantrySection } from './Pantry.styles'
 
 type PantryProps = {
   household_id: string
@@ -21,8 +21,7 @@ const Pantry: React.FC<PantryProps> = ({household_id}) => {
   const pantryQry = useQuery({
     queryKey: ["pantryItems"],
     queryFn: async () => {
-      const serveJsonIngredients = "http://localhost:4100/ingredients?inPantry=true";
-      const mongoIngredients = `/api/household/${household_id}/items`;
+      const mongoIngredients = `/api/household/${household_id}/pantry`;
 
       let fetchedIngredients = mongoIngredients;
       const response = await fetch(fetchedIngredients);
@@ -47,7 +46,7 @@ const Pantry: React.FC<PantryProps> = ({household_id}) => {
       <IngredientForm />
       
       {!pantryQry.isLoading &&
-        <IngredientList items={pantryQry.data} />
+        <IngredientList items={pantryQry.data} mode="pantry" />
       }
     </PantrySection>
   )
