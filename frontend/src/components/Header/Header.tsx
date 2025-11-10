@@ -2,7 +2,7 @@
 import { StyledHeader } from "./Header.styles";
 import logo from "../../assets/images/pantryIconOne.png"
 import Navbar from "../Navbar/Navbar"
-import LoginButton from "../LoginButton/LoginButton";
+import LoginButton from "../Button_Drawer/LoginButton/LoginButton";
 
 const Header = () => {
   return (
