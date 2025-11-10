@@ -44,22 +44,22 @@ app.get('/api/household/:household_id', async (req, res) => {
   const hid = new BSON.ObjectId(household_id);
   const household = await pantryDB.collection('households').findOne({ _id:hid});
   res.send(household);
-})
+});
 
 
 // look at a selected household's pantry
 app.get('/api/household/:household_id/pantry', async (req, res) => {
   const { household_id } = req.params;
-  const items = await pantryDB.collection('pantry_items').find({ household_id: household_id, pantry_qty:{$gt:0}}).toArray();
+  const items = await pantryDB.collection('pantry_items').find({ household_id: household_id, inPantry:true}).toArray();
   res.send(items);
 });
 
 // look at a selected household's grocery list
 app.get('/api/household/:household_id/grocerylist', async (req, res) => {
   const { household_id } = req.params;
-  const items = await pantryDB.collection('pantry_items').find({ household_id: household_id, grocerylist_qty:{$gt:0}}).toArray();
+  const items = await pantryDB.collection('pantry_items').find({ household_id: household_id, onGroceryList:true}).toArray();
   res.send(items);
-})
+});
 
 
 // add items to pantry
@@ -67,27 +67,54 @@ app.post('/api/household/:household_id/pantry', async (req, res) => {
   const { household_id } = req.params;
 
   const items = req.body.map((item) => {
-    // if no pantry qty was passed in, default it to 1
-    item.pantry_qty = item.pantry_qty ? item.pantry_qty : 1;
-    // for grocery list, default to 0
-    item.grocery_qty = item.grocery_qty ? item.grocery_qty : 0;
+    // if no pantry boolean was passed in, default to true
+    item.inPantry = item.inPantry ? item.inPantry : true;
+    // for grocery list, default to false
+    item.onGroceryList = item.onGroceryList ? item.onGroceryList : false;
 
     item.household_id = household_id;
     return item;
   });
 
   const result = await pantryDB.collection('pantry_items').insertMany(items);
-  // console.log(result);
   res.send(result);
 });
 
 // remove an item from the pantry
-app.delete('/api/household/:household_id/item/:item_id', async (req, res) => {
+app.put('/api/household/:household_id/item/:item_id', async (req, res) => {
   const { household_id, item_id } = req.params;
+  const { mode, action } = req.body;
 
-  
+  let inPantry, onGroceryList;
 
-})
+  if(mode == 'pantry' && (action == 'remove' || action == 'transfer')) {
+    inPantry = false;
+  }
+
+  if(mode == 'grocery' && (action == 'transfer' || action == 'duplicate')) {
+    inPantry = true;
+  }
+
+  if(mode == 'grocery' && (action == 'remove' || action == 'transfer')) {
+    onGroceryList = false;
+  }
+
+  if(mode == 'pantry' && (action == 'transfer' || action == 'duplicate')) {
+    onGroceryList = true;
+  }
+
+  let updates = { };
+  if(inPantry != undefined) {
+    updates['inPantry'] = inPantry;
+  }
+  if(onGroceryList != undefined) {
+    updates['onGroceryList'] = onGroceryList;
+  }
+
+  const result = await pantryDB.collection('pantry_items').findOneAndUpdate({ _id:item_id, household_id:household_id }, {updates})
+  res.send(result)
+});
+
 
 
 // connect and listen
