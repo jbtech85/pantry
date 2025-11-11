@@ -23,24 +23,32 @@ const IngredientListButton = ({mode, action, ingredient_id}: ButtonProps) => {
   }
 
   const queryClient = useQueryClient();
+
+  type ingredientFnParams = {
+    household_id: string,
+    ingredient_id: string
+  }
+
+  const updateIngredientFn = async ({household_id, ingredient_id}: ingredientFnParams) => {
+    const resp = await fetch(`/api/household/${household_id}/item/${ingredient_id}`, {
+      method: 'PUT',
+      body: JSON.stringify({ mode:mode, action:action })
+    });
+    if(!resp.ok) {
+      throw new Error('Unable to remove item');
+    }
+    return resp.json();
+  }
+
   const updateIngredient = useMutation({
-    mutationFn: async (household_id, ingredient_id) => {
-      const resp = await fetch(`/api/household/${household_id}/item/${ingredient_id}`, {
-        method: 'PUT',
-        body: JSON.stringify({ mode:mode, action:action })
-      });
-      if(!resp.ok) {
-        throw new Error('Unable to remove item');
-      }
-      return resp.json();
-    },
+    mutationFn: (updateIngredientFn),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['pantryItems']});
     }
   });
 
   return (
-    <button onClick={() => updateIngredient.mutate(/* ids here */)}>
+    <button onClick={() => updateIngredient.mutate({ household_id:'1', ingredient_id:'1' })}>
       {renderIconFn()}
     </button>
   )

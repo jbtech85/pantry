@@ -80,7 +80,7 @@ app.post('/api/household/:household_id/pantry', async (req, res) => {
   res.send(result);
 });
 
-// remove an item from the pantry
+// update an item's info
 app.put('/api/household/:household_id/item/:item_id', async (req, res) => {
   const { household_id, item_id } = req.params;
   const { mode, action } = req.body;
