@@ -18,6 +18,10 @@ export const IngredientLI = styled.li`
       border: none;
       font-size: 26px;
       padding: 0 20px;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 `;

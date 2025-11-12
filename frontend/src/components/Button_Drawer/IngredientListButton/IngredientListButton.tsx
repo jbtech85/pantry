@@ -13,9 +13,9 @@ type ButtonProps = {
 const IngredientListButton = ({mode, action, ingredient_id}: ButtonProps) => {
   const renderIconFn = () => {
     switch(action) {
-      case 'duplicate': // move to other list, do not remove from current list
+      case 'transfer': // move to other list, do not remove from current list
         return <RiFilePaper2Line />
-      case 'transfer': // move to other list, and remove from current list
+      case 'duplicate': // move to other list, and remove from current list
         return <LuCopyPlus />
       case 'remove': // remove from current list. prompt will handle whether to move to other list
         return <TiDeleteOutline />
@@ -30,9 +30,11 @@ const IngredientListButton = ({mode, action, ingredient_id}: ButtonProps) => {
   }
 
   const updateIngredientFn = async ({household_id, ingredient_id}: ingredientFnParams) => {
+    console.log(`household_id:${household_id}. ingredient_id: ${ingredient_id}`);
     const resp = await fetch(`/api/household/${household_id}/item/${ingredient_id}`, {
       method: 'PUT',
-      body: JSON.stringify({ mode:mode, action:action })
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ "mode":mode, "action":action })
     });
     if(!resp.ok) {
       throw new Error('Unable to remove item');
@@ -48,7 +50,7 @@ const IngredientListButton = ({mode, action, ingredient_id}: ButtonProps) => {
   });
 
   return (
-    <button onClick={() => updateIngredient.mutate({ household_id:'1', ingredient_id:'1' })}>
+    <button onClick={() => updateIngredient.mutate({ household_id:'1', ingredient_id:ingredient_id })}>
       {renderIconFn()}
     </button>
   )

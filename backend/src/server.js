@@ -1,5 +1,5 @@
 import express from 'express';
-import { BSON, MongoClient, ServerApiVersion } from 'mongodb';
+import { BSON, ObjectId, MongoClient, ServerApiVersion } from 'mongodb';
 
 // initialize express
 const app = express();
@@ -111,7 +111,14 @@ app.put('/api/household/:household_id/item/:item_id', async (req, res) => {
     updates['onGroceryList'] = onGroceryList;
   }
 
-  const result = await pantryDB.collection('pantry_items').findOneAndUpdate({ _id:item_id, household_id:household_id }, {updates})
+  const setUpdates = JSON.stringify(updates);
+
+  // const hid = new BSON.ObjectId(item_id);
+  const hid = ObjectId.createFromHexString(item_id);
+
+  console.log(setUpdates);
+  console.log(hid)
+  const result = await pantryDB.collection('pantry_items').findOneAndUpdate({ _id:hid, household_id:`${household_id}` }, {$set:{updates}})
   res.send(result)
 });
 
