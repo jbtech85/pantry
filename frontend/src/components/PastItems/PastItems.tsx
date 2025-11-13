@@ -1,16 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import IngredientList from "../IngredientList/IngredientList";
 
-type GroceryProps = {
+type PastItemsProps = {
   household_id: string
 }
 
-const GroceryList: React.FC<GroceryProps> = ({household_id}) => {
+const PastItems: React.FC<PastItemsProps> = ({household_id}) => {
   // Grab data from our data source via Tanstack
-  const groceryQry = useQuery({
-    queryKey: ["groceryItems"],
+  const pastitemQry = useQuery({
+    queryKey: ["pastItems"],
     queryFn: async () => {
-      const mongoIngredients = `/api/household/${household_id}/grocerylist`;
+      const mongoIngredients = `/api/household/${household_id}/pastitems`;
 
       let fetchedIngredients = mongoIngredients;
       const response = await fetch(fetchedIngredients);
@@ -21,20 +21,20 @@ const GroceryList: React.FC<GroceryProps> = ({household_id}) => {
     }
   });
   
-  if(groceryQry.isLoading) {
+  if(pastitemQry.isLoading) {
     return <div>Loading...</div>
   }
   
-  if(groceryQry.isError) {
-    return <div>Error: {groceryQry.error.message}</div>;
+  if(pastitemQry.isError) {
+    return <div>Error: {pastitemQry.error.message}</div>;
   }  
 
   return (
     <section>
-      {!groceryQry.isLoading &&
-        <IngredientList items={groceryQry.data} mode="grocery" />
+      {!pastitemQry.isLoading &&
+        <IngredientList items={pastitemQry.data} mode="grocery" />
       }
     </section>
   )
 }
-export default GroceryList
+export default PastItems

@@ -30,7 +30,7 @@ const Pantry: React.FC<PantryProps> = ({household_id}) => {
       }
       return response.json();
     }
-  })
+  });
 
   
   if(pantryQry.isLoading) {

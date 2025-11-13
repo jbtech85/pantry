@@ -1,5 +1,10 @@
-export default function GroceryListPage() {
+import GroceryList from "../components/GroceryList/GroceryList";
+
+const GroceryListPage = () => {
   return (
-    <div>GroceryListPage</div>
+    <div>
+      <GroceryList household_id="1" />
+    </div>
   )
 }
+export default GroceryListPage

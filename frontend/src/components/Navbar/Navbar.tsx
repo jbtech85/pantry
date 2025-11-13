@@ -1,25 +1,38 @@
 import { Link } from "react-router-dom"
 import styled from 'styled-components';
+import logo from "../../assets/images/pantryIconOne.png"
 
-const NavUL = styled.ul`
-  display: flex;
-  list-style: none;
+const StyledNav = styled.nav`
+  background: hsl(10 85% 83% / 80%);
 
-  li {
-    padding: 0px 10px 0px 5px;
+  ul {
+    list-style: none;
+    padding-inline-start: 5px;
 
-    a {
-      font-family: 'Poppins', sans-serif;
-      font-weight: bold;
-      text-decoration: none;
+    li {
+      padding: 0px 10px 10px 5px;
+
+      a {
+        color: black;
+        font-family: 'Poppins', sans-serif;
+        font-weight: bold;
+        text-decoration: none;
+
+        &:hover {
+          color: #e08d12e1;
+        }
+      }
     }
   }
-`;
+`
+
 
 export default function Navbar(){
   return (
-      <nav>
-        <NavUL>
+      <StyledNav>
+        <img src={logo} height={100} alt="pantry logo" />
+        
+        <ul>
           <li>
             <Link to='/'>Pantry</Link>
           </li>
@@ -27,9 +40,12 @@ export default function Navbar(){
             <Link to='/grocery-list'>Grocery List</Link>
           </li>
           <li>
+            <Link to='/past-items'>Past Items</Link>
+          </li>
+          <li>
             <Link to='/recipes'>Recipes</Link>
           </li>
-        </NavUL>
-      </nav>
+        </ul>
+      </StyledNav>
   )
 }
