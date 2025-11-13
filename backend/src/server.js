@@ -61,6 +61,13 @@ app.get('/api/household/:household_id/grocerylist', async (req, res) => {
   res.send(items);
 });
 
+// look at a selected household's past items
+app.get('/api/household/:household_id/pastitems', async (req, res) => {
+  const { household_id } = req.params;
+  const items = await pantryDB.collection('pantry_items').find({ household_id: household_id, inPantry:false, onGroceryList:false}).toArray();
+  res.send(items);
+});
+
 
 // add items to pantry
 app.post('/api/household/:household_id/pantry', async (req, res) => {
@@ -111,15 +118,10 @@ app.put('/api/household/:household_id/item/:item_id', async (req, res) => {
     updates['onGroceryList'] = onGroceryList;
   }
 
-  const setUpdates = JSON.stringify(updates);
-
-  // const hid = new BSON.ObjectId(item_id);
+  console.log(updates);
   const hid = ObjectId.createFromHexString(item_id);
-
-  console.log(setUpdates);
-  console.log(hid)
-  const result = await pantryDB.collection('pantry_items').findOneAndUpdate({ _id:hid, household_id:`${household_id}` }, {$set:{updates}})
-  res.send(result)
+  const result = await pantryDB.collection('pantry_items').findOneAndUpdate({ _id:hid, household_id:`${household_id}` }, {$set:updates});
+  res.send(result);
 });
 
 

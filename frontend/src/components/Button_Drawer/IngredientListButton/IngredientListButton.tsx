@@ -45,7 +45,7 @@ const IngredientListButton = ({mode, action, ingredient_id}: ButtonProps) => {
   const updateIngredient = useMutation({
     mutationFn: (updateIngredientFn),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['pantryItems']});
+      queryClient.invalidateQueries({ queryKey: [`${mode}Items`]});
     }
   });
 

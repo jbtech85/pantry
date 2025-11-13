@@ -2,9 +2,10 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./Layout";
 import NotFoundPage from "./pages/NotFoundPage";
 import HomePage from "./pages/HomePage"
-import GroceryList from "./components/GroceryList/GroceryList";
+import GroceryListPage from "./pages/GroceryListPage";
 import RecipeListPage, { recipeListLoader } from "./pages/RecipeListPage";
 import RecipePage, { recipeLoader } from "./pages/RecipePage";
+import PastItemsPage from "./pages/PastItemsPage";
 
 
 const routes = [{
@@ -17,7 +18,10 @@ const routes = [{
       element: <HomePage />
     }, {
       path: '/grocery-list',
-      element: <GroceryList />
+      element: <GroceryListPage />
+    }, {
+      path: '/past-items',
+      element: <PastItemsPage />
     }, {
       path: '/recipes/:filter?/:filterId?',
       element: <RecipeListPage />,
