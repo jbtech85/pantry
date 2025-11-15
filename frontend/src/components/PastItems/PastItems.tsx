@@ -32,7 +32,7 @@ const PastItems: React.FC<PastItemsProps> = ({household_id}) => {
   return (
     <section>
       {!pastitemQry.isLoading &&
-        <IngredientList items={pastitemQry.data} mode="grocery" />
+        <IngredientList items={pastitemQry.data} mode="pastitem" />
       }
     </section>
   )

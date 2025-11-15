@@ -98,7 +98,8 @@ app.put('/api/household/:household_id/item/:item_id', async (req, res) => {
     inPantry = false;
   }
 
-  if(mode == 'grocery' && (action == 'transfer' || action == 'duplicate')) {
+  if((mode == 'grocery' && (action == 'transfer' || action == 'duplicate'))
+  || (mode == 'pastitem' && (action == 'pantry' || action == 'both'))) {
     inPantry = true;
   }
 
@@ -106,7 +107,8 @@ app.put('/api/household/:household_id/item/:item_id', async (req, res) => {
     onGroceryList = false;
   }
 
-  if(mode == 'pantry' && (action == 'transfer' || action == 'duplicate')) {
+  if((mode == 'pantry' && (action == 'transfer' || action == 'duplicate'))
+  || (mode == 'pastitem' && (action == 'grocery' || action == 'both'))) {
     onGroceryList = true;
   }
 
