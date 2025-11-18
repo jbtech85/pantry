@@ -26,4 +26,6 @@ notes
 
 database
 backend/node_modules
+backend/.env
+backend/data
 frontend/node_modules
