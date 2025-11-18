@@ -10,7 +10,8 @@ app.use(express.json());
 let pantryDB;
 let pantryItemsCollection;
 async function connectToPantryItemsCollection() {
-  const uri = 'mongodb://mongo:27017/pantry';
+  // const uri = 'mongodb://127.0.0.1:27117'; // local
+  const dockeruri = 'mongodb://mongo:27117/pantry'; // docker
   const client = new MongoClient(uri, {
     serverApi: {
       version: ServerApiVersion.v1,
@@ -20,7 +21,7 @@ async function connectToPantryItemsCollection() {
   });
 
   await client.connect();
-  pantryDB = client.db();
+  pantryDB = client.db(); // pass in 'pantry' when using local
 }
 
 // create a household
