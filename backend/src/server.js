@@ -10,7 +10,7 @@ app.use(express.json());
 let pantryDB;
 let pantryItemsCollection;
 async function connectToPantryItemsCollection() {
-  const uri = 'mongodb://127.0.0.1:27017';
+  const uri = 'mongodb://mongo:27017/pantry';
   const client = new MongoClient(uri, {
     serverApi: {
       version: ServerApiVersion.v1,
@@ -20,7 +20,7 @@ async function connectToPantryItemsCollection() {
   });
 
   await client.connect();
-  pantryDB = client.db('pantry');
+  pantryDB = client.db();
 }
 
 // create a household
