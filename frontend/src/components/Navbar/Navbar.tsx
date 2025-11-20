@@ -34,7 +34,7 @@ export default function Navbar(){
         
         <ul>
           <li>
-            <Link to='/'>Pantry</Link>
+            <Link to='/'>Pantry123</Link>
           </li>
           <li>
             <Link to='/grocery-list'>Grocery List</Link>

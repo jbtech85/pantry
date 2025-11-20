@@ -22,7 +22,9 @@ export default defineConfig({
     },
     port: 5100,
     strictPort: true,
-    host: true,
-    origin: "http://0.0.0.0:5100"
+    host: "0.0.0.0",
+    watch: {
+      usePolling: true
+    }
   }
 })
