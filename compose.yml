@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  client:
+    restart: unless-stopped
+    build: ./frontend
+    ports:
+      - "5100:5100"
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend
+          target: /client
+          initial_sync: true
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+  api:
+    restart: unless-stopped
+    build: ./backend
+    ports:
+      - "4100:4100"
+    depends_on:
+      - mongo
+  mongo:
+    container_name: pantrymongo
+    image: mongo
+    restart: unless-stopped
+    expose:
+      - "27117"
+    volumes:
+      - ./data:/data/pantrydb
+    ports:
+      - "27117:27117"

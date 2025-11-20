@@ -1,7 +1,7 @@
 # Use latest even number version
 FROM node:24-alpine
 
-WORKDIR /pantryapp
+WORKDIR /client
 
 # Copies package.json and package-lock.json into WORKDIR, from the directory this Dockerfile is inside of
 COPY package*.json ./
