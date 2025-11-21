@@ -10,9 +10,9 @@ app.use(express.json());
 let pantryDB;
 let pantryItemsCollection;
 async function connectToPantryItemsCollection() {
-  // const uri = 'mongodb://127.0.0.1:27117'; // local
+  const localuri = 'mongodb://127.0.0.1:27117'; // local
   const dockeruri = 'mongodb://mongo:27117/pantry'; // docker
-  const client = new MongoClient(uri, {
+  const dbclient = new MongoClient(localuri, {
     serverApi: {
       version: ServerApiVersion.v1,
       strict: true,
@@ -20,8 +20,8 @@ async function connectToPantryItemsCollection() {
     }
   });
 
-  await client.connect();
-  pantryDB = client.db(); // pass in 'pantry' when using local
+  await dbclient.connect();
+  pantryDB = dbclient.db('pantry'); // pass in 'pantry' when using local
 }
 
 // create a household
@@ -51,7 +51,11 @@ app.get('/api/household/:household_id', async (req, res) => {
 // look at a selected household's pantry
 app.get('/api/household/:household_id/pantry', async (req, res) => {
   const { household_id } = req.params;
+  console.log('calling get pantry');
   const items = await pantryDB.collection('pantry_items').find({ household_id: household_id, inPantry:true}).toArray();
+  console.log(items);
+  console.log(typeof(items));
+  console.log('sanity marker');
   res.send(items);
 });
 

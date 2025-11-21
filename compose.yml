@@ -1,11 +1,10 @@
-version: "3.8"
-
 services:
   client:
     restart: unless-stopped
     build: ./frontend
     ports:
       - "5100:5100"
+    # lets us hot reload with vite
     develop:
       watch:
         - action: sync
@@ -27,9 +26,9 @@ services:
     container_name: pantrymongo
     image: mongo
     restart: unless-stopped
-    expose:
-      - "27117"
     volumes:
-      - ./data:/data/pantrydb
+      - appdata:/data/pantrydb
     ports:
       - "27117:27117"
+volumes:
+  appdata:

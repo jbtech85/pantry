@@ -13,7 +13,7 @@ type IngredientListProps = {
   mode: string
 }
 
-const IngredientList = ({items, mode}: IngredientListProps) => {
+const IngredientList: React.FC<IngredientListProps> = ({items, mode}) => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const onCheckboxChange = (event:React.ChangeEvent<HTMLInputElement>) => {
     const selectedItem: string = event.target.value;
