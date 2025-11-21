@@ -1,41 +1,49 @@
-import { useActionState } from 'react'
+import { useActionState } from "react";
 
-// function to handle saving ingredient to user pantry
-const addIngredientToPantry = async () => {
-  // TODO: add actual logic
-  return new Promise((resolve) => setTimeout(resolve, 1000));
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useContext } from "react";
+import { HouseholdContext } from "../../context/userContext";
+
+type IngredientFormProps = {
+  mode: string
 }
 
-const IngredientForm = () => {
-  const ingredientInputStyle = "outline-1 outline-gray-400 ml-2 focus:outline-2 focus: -outline-offset-2 focus:outline-orange-300 px-2 py-1"
+type addIngredientParams = {
+  household_id: string,
+  ingredient_name: string,
+  ingredient_variation?: string
+}
 
-  const submitForm = (formData) => {
-    const ingredient = formData.get("ingredient");
+const IngredientForm: React.FC<IngredientFormProps> = ({ mode }) => {
 
-    // make sure we have an ingredient
-    if(!ingredient) {
-      console.log("no ingredient entered");
-    } else {
-      console.log(`You entered ${ingredient}`);
-    }
-  };
+  const household_id = useContext(HouseholdContext);
+
+  const addIngredientFn = async ({household_id, ingredient_name, ingredient_variation=''}: addIngredientParams) => {
+    const resp = await fetch(`/api/household/${household_id}/`)
+  }
+
+  const addIngredientMutation = useMutation({
+    mutationFn: (addIngredientFn),
+
+  })
+
+  const actionAddIngredient = async (prevState: any,formData: FormData) => {
+    const newIngredient = formData.get("ingredient") as string;
+
+    addIngredientMutation.mutate({ household_id:`${household_id}`, ingredient_name:newIngredient })
+  }
+
+  const [state, formAction] = useActionState(actionAddIngredient, undefined)
 
   return (
-    <form action={submitForm} className="mx-auto max-w-7xl px-4 py-10">
-      <label htmlFor="ingredient" className="text-sm/6 text-gray-900 font-medium"></label>
-        {/* TODO: add rotating placeholder, eg Salt, then Celery.  Maybe pull from real ingredients somewhere else? */}
-        {/* TODO: Confirm versus known ingredients. Consider checking the API we eventually pull recipes from */}
-        {/* TODO: Let user know they already added ingredient.  Ask if they want to add/increase quantity */}
+    <form action={formAction}>
+      <label htmlFor="ingredient">
+        <input type="text" name="ingredient" />
+      </label>
         
-      <input type="text" name="ingredient"
-        className={ingredientInputStyle} />
-
-      <button type="submit" value="Add to pantry" 
-        className="outline-1 outline-gray-400 ml-4 rounded-md bg-orange-200 px-3 py-1 text-orange-950 text-sm font-medium hover:bg-orange-400"
-      >
+      <button type="submit">
         Add to pantry
       </button>
-      
     </form>
   )
 }

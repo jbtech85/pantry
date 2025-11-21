@@ -26,7 +26,7 @@ const Pantry: React.FC<PantryProps> = ({household_id}) => {
       let fetchedIngredients = mongoIngredients;
       const response = await fetch(fetchedIngredients);
       if(!response.ok){
-        throw new Error("Network response failed");
+        throw new Error("No items found. Please add items and try again.");
       }
       return response.json();
     }
@@ -38,16 +38,17 @@ const Pantry: React.FC<PantryProps> = ({household_id}) => {
   }
   
   if(pantryQry.isError) {
-    return <div>Error: {pantryQry.error.message}</div>;
+    return <div>{pantryQry.error.message}</div>;
   }
   
   return (
     <PantrySection>
-      <IngredientForm />
+      <IngredientForm mode="pantry" />
       
-      {!pantryQry.isLoading &&
-        <IngredientList items={pantryQry.data} mode="pantry" />
-      }
+      {!pantryQry.isLoading && !pantryQry.isError && 
+        <IngredientList items={pantryQry.data} mode="pantry" /> }
+
+      
     </PantrySection>
   )
 }
