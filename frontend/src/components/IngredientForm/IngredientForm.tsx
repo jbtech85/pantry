@@ -1,6 +1,6 @@
 import { useActionState } from "react";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useContext } from "react";
 import { HouseholdContext } from "../../context/userContext";
 
@@ -15,31 +15,37 @@ type addIngredientParams = {
 }
 
 const IngredientForm: React.FC<IngredientFormProps> = ({ mode }) => {
-
+  const queryClient = useQueryClient();
   const household_id = useContext(HouseholdContext);
 
-  const addIngredientFn = async ({household_id, ingredient_name, ingredient_variation=''}: addIngredientParams) => {
-    const resp = await fetch(`/api/household/${household_id}/`)
+  // the core add function that calls our API
+  const addIngredient = async (formData: FormData) => {
+    // event.preventDefault();
+    let ingredientName = formData.get("ingredient");
+    let ingredientVariation = formData.get("variation");
+    // 
+
+    const resp = await fetch(`/api/household/${household_id}/item/new`, {
+      method: 'PUT',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        "name": ingredientName,
+        "ingredientVariation": ingredientVariation,
+        "mode": mode
+      })
+    });
+    if(resp.ok) {
+      queryClient.invalidateQueries({ queryKey: [`${mode}Items`]});
+    } else {
+      throw new Error('Unable to add item');
+    }
   }
 
-  const addIngredientMutation = useMutation({
-    mutationFn: (addIngredientFn),
-
-  })
-
-  const actionAddIngredient = async (prevState: any,formData: FormData) => {
-    const newIngredient = formData.get("ingredient") as string;
-
-    addIngredientMutation.mutate({ household_id:`${household_id}`, ingredient_name:newIngredient })
-  }
-
-  const [state, formAction] = useActionState(actionAddIngredient, undefined)
 
   return (
-    <form action={formAction}>
-      <label htmlFor="ingredient">
-        <input type="text" name="ingredient" />
-      </label>
+    <form action={addIngredient}>
+      <input type="text" name="ingredient" placeholder="name" />
+      <input type="text" name="variation" placeholder="variation" />
         
       <button type="submit">
         Add to pantry

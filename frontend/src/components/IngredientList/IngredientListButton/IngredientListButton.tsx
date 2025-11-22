@@ -24,8 +24,6 @@ const IngredientListButton = ({mode, action, ingredient_id}: ButtonProps) => {
     }
   }
 
-  const queryClient = useQueryClient();
-
   type ingredientFnParams = {
     household_id: string,
     ingredient_id: string
@@ -43,6 +41,8 @@ const IngredientListButton = ({mode, action, ingredient_id}: ButtonProps) => {
     }
     return resp.json();
   }
+
+  const queryClient = useQueryClient();
 
   const updateIngredient = useMutation({
     mutationFn: (updateIngredientFn),

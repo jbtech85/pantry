@@ -1,6 +1,8 @@
 import { IngredientLI } from "./IngredientList.styles"
 import IngredientListButton from "./IngredientListButton/IngredientListButton";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { useQuery } from "@tanstack/react-query"
+import { HouseholdContext } from "../../context/userContext";
 import IngredientListCheckbox from "./IngredientListCheckbox/IngredientListCheckbox";
 
 type ingredientType = {
@@ -9,11 +11,10 @@ type ingredientType = {
 }
 
 type IngredientListProps = {
-  items: ingredientType[],
   mode: string
 }
 
-const IngredientList: React.FC<IngredientListProps> = ({items, mode}) => {
+const IngredientList: React.FC<IngredientListProps> = ({mode}) => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const onCheckboxChange = (event:React.ChangeEvent<HTMLInputElement>) => {
     const selectedItem: string = event.target.value;
@@ -24,9 +25,34 @@ const IngredientList: React.FC<IngredientListProps> = ({items, mode}) => {
     }
   }
 
+  const household_id = useContext(HouseholdContext);  
+
+  // Grab data from our data source via Tanstack
+  const pantryQry = useQuery({
+    queryKey: ["pantryItems"],
+    queryFn: async () => {
+      const mongoIngredients = `/api/household/${household_id}/pantry`;
+
+      let fetchedIngredients = mongoIngredients;
+      const response = await fetch(fetchedIngredients);
+      if(!response.ok){
+        throw new Error("No items found. Please add items and try again.");
+      }
+      return response.json();
+    }
+  });
+
+  if(pantryQry.isLoading) {
+    return <div>Loading...</div>
+  }
+  
+  if(pantryQry.isError) {
+    return <div>{pantryQry.error.message}</div>;
+  }
+
   return (
     <ul>
-      {items.map((ingredient: ingredientType) => (
+      {pantryQry.data.map((ingredient: ingredientType) => (
         <IngredientLI key={ingredient._id}>
           <div>
             <div>{ingredient.name}</div>
