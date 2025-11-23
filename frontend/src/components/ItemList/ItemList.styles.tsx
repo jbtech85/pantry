@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const IngredientLI = styled.li`
+export const ItemLI = styled.li`
   border-bottom: 1px solid grey;
   display: flex;
   padding: 10px 0px;

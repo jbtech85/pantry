@@ -8,17 +8,10 @@ app.use(express.json());
 
 // initialize pantry database
 let pantryDB;
-let pantryItemsCollection;
 async function connectToPantryItemsCollection() {
   const localuri = 'mongodb://127.0.0.1:27117'; // local
-  const dockeruri = 'mongodb://mongo:27117/pantry'; // docker
-  const dbclient = new MongoClient(localuri, {
-    serverApi: {
-      version: ServerApiVersion.v1,
-      strict: true,
-      deprecationErrors: true
-    }
-  });
+  const dockeruri = 'mongodb://localhost:27117'; // docker
+  const dbclient = new MongoClient(dockeruri);
 
   await dbclient.connect();
   pantryDB = dbclient.db('pantry'); // pass in 'pantry' when using local
@@ -67,28 +60,28 @@ app.get('/api/household/:household_id/grocerylist', async (req, res) => {
 });
 
 // look at a selected household's past items
-app.get('/api/household/:household_id/pastitems', async (req, res) => {
+app.get('/api/household/:household_id/past', async (req, res) => {
   const { household_id } = req.params;
   const items = await pantryDB.collection('pantry_items').find({ household_id: household_id, inPantry:false, onGroceryList:false}).toArray();
   res.send(items);
 });
 
 
-// add items to pantry
-app.post('/api/household/:household_id/pantry', async (req, res) => {
+// add an item to pantry/grocery
+app.post('/api/household/:household_id/item', async (req, res) => {
+  console.log('call heard');
   const { household_id } = req.params;
+  const { itemName, itemVariation, mode} = req.body;
 
-  const items = req.body.map((item) => {
-    // if no pantry boolean was passed in, default to true
-    item.inPantry = item.inPantry ? item.inPantry : true;
-    // for grocery list, default to false
-    item.onGroceryList = item.onGroceryList ? item.onGroceryList : false;
+  const newItem = {
+    name: itemName,
+    variation: itemVariation,
+    household_id: household_id
+  }
+  newItem.inPantry = (mode == "pantry") ? true : false;
+  newItem.onGroceryList = (mode == "grocerylist") ? true : false;
 
-    item.household_id = household_id;
-    return item;
-  });
-
-  const result = await pantryDB.collection('pantry_items').insertMany(items);
+  const result = await pantryDB.collection('pantry_items').insertOne(newItem);
   res.send(result);
 });
 
@@ -103,17 +96,17 @@ app.put('/api/household/:household_id/item/:item_id', async (req, res) => {
     inPantry = false;
   }
 
-  if((mode == 'grocery' && (action == 'transfer' || action == 'duplicate'))
-  || (mode == 'pastitem' && (action == 'pantry' || action == 'both'))) {
+  if((mode == 'grocerylist' && (action == 'transfer' || action == 'duplicate'))
+  || (mode == 'past' && (action == 'pantry' || action == 'both'))) {
     inPantry = true;
   }
 
-  if(mode == 'grocery' && (action == 'remove' || action == 'transfer')) {
+  if(mode == 'grocerylist' && (action == 'remove' || action == 'transfer')) {
     onGroceryList = false;
   }
 
   if((mode == 'pantry' && (action == 'transfer' || action == 'duplicate'))
-  || (mode == 'pastitem' && (action == 'grocery' || action == 'both'))) {
+  || (mode == 'past' && (action == 'grocerylist' || action == 'both'))) {
     onGroceryList = true;
   }
 

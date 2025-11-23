@@ -1,39 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
-import IngredientList from "../IngredientList/IngredientList";
+import ItemList from "../ItemList/ItemList";
 
-type GroceryProps = {
-  household_id: string
-}
-
-const GroceryList: React.FC<GroceryProps> = ({household_id}) => {
-  // Grab data from our data source via Tanstack
-  const groceryQry = useQuery({
-    queryKey: ["groceryItems"],
-    queryFn: async () => {
-      const mongoIngredients = `/api/household/${household_id}/grocerylist`;
-
-      let fetchedIngredients = mongoIngredients;
-      const response = await fetch(fetchedIngredients);
-      if(!response.ok){
-        throw new Error("Network response failed");
-      }
-      return response.json();
-    }
-  });
-  
-  if(groceryQry.isLoading) {
-    return <div>Loading...</div>
-  }
-  
-  if(groceryQry.isError) {
-    return <div>Error: {groceryQry.error.message}</div>;
-  }  
-
+const GroceryList: React.FC = () => {
   return (
     <section>
-      {!groceryQry.isLoading &&
-        <IngredientList items={groceryQry.data} mode="grocery" />
-      }
+      <ItemList mode="grocerylist" />
     </section>
   )
 }
