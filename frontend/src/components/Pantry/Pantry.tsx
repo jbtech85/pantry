@@ -1,12 +1,12 @@
-import IngredientForm from "../IngredientForm/IngredientForm"
-import IngredientList from "../IngredientList/IngredientList"
+import ItemForm from "../ItemForm/ItemForm"
+import ItemList from "../ItemList/ItemList"
 import { PantrySection } from './Pantry.styles'
 
 const Pantry: React.FC = () => { 
   return (
     <PantrySection>
-      <IngredientForm mode="pantry" />
-      <IngredientList mode="pantry" />
+      <ItemForm mode="pantry" />
+      {/* <ItemList mode="pantry" /> */}
     </PantrySection>
   )
 }
