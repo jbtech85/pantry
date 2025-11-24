@@ -65,8 +65,13 @@ const ItemForm: React.FC<ItemFormProps> = ({ mode }) => {
   }
   return (
     <form action={addItem}>
-      <input type="text" name="item" placeholder="name" />
-      <input type="text" name="variation" placeholder="variation" />
+      <label><span>*</span>Item: 
+        {/* TODO: use rotating suggested items */}
+        <input type="text" name="item" placeholder="shredded cheese" />
+      </label>
+      <label>Variation: 
+        <input type="text" name="variation" placeholder="mexican blend" />
+      </label>
         
       <button type="submit">
         Add to pantry

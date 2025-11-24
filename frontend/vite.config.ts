@@ -17,12 +17,13 @@ export default defineConfig({
     proxy: {
       '/api': {
         target: 'http://localhost:4100',
-        changeOrigin:true
+        changeOrigin:true,
+        secure: false
       }
     },
     port: 5100,
     strictPort: true,
-    host: "0.0.0.0",
+    host: true,
     watch: {
       usePolling: true
     }
