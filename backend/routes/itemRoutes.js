@@ -1,11 +1,11 @@
 import express from "express";
-import pantryDB from '../db/connection';
+import pantryDB from '../db/connection.js';
 import { ObjectId } from 'mongodb';
 
 const router = express.Router();
 
 
-router.get('/api', (req, res) => {
+router.get('/', (req, res) => {
   res.send('Connection confirmed')/
   console.log('connection attempted');
 });
@@ -34,14 +34,14 @@ router.get('/household/:household_id/grocerylist', async (req, res) => {
 });
 
 // look at a selected household's past items
-app.get('/household/:household_id/past', async (req, res) => {
+router.get('/household/:household_id/past', async (req, res) => {
   const { household_id } = req.params;
   const items = await pantryDB.collection('pantry_items').find({ household_id: household_id, inPantry:false, onGroceryList:false}).toArray();
   res.send(items);
 });
 
 // add an item to pantry/grocery
-app.post('/household/:household_id/item', async (req, res) => {
+router.post('/household/:household_id/item', async (req, res) => {
   console.log('call heard');
   const { household_id } = req.params;
   const { itemName, itemVariation, mode} = req.body;
@@ -59,7 +59,7 @@ app.post('/household/:household_id/item', async (req, res) => {
 });
 
 // update an item's info
-app.put('/household/:household_id/:item_id', async (req, res) => {
+router.put('/household/:household_id/:item_id', async (req, res) => {
   const { household_id, item_id } = req.params;
   const { mode, action } = req.body;
 
@@ -97,3 +97,4 @@ app.put('/household/:household_id/:item_id', async (req, res) => {
   res.send(result);
 });
 
+export default router;

@@ -2,11 +2,11 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx nodemon --env-file=.env src/server",
-    "prod": "node --env-file=.env src/server"
+    "dev": "npx nodemon --env-file=.env server",
+    "prod": "node --env-file=.env server"
   },
   "keywords": [],
   "author": "",

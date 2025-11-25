@@ -20,15 +20,27 @@ services:
     build: ./backend
     ports:
       - "4100:4100"
+    
+    develop:
+      watch:
+        - action: sync
+          path: ./backend
+          target: /api
+          initial_sync: true
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
     depends_on:
       - mongo
   mongo:
-    container_name: pantrymongo
+    container_name: pantrydb
     image: mongo
     restart: unless-stopped
     volumes:
       - appdata:/data/pantrydb
     ports:
       - "27117:27117"
+    command: --port 27117 ## Docker containers in same compose file still see mongo as 27017 otherwise
 volumes:
   appdata:
