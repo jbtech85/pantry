@@ -31,7 +31,7 @@ const ItemList: React.FC<ItemListProps> = ({mode}) => {
   const pantryQry = useQuery({
     queryKey: [`${mode}Items`],
     queryFn: async () => {
-      const mongoItems = `/api/household/${household_id}/${mode}`;
+      const mongoItems = `/api/items/household/${household_id}/${mode}`;
 
       let fetchedItems = mongoItems;
       const response = await fetch(fetchedItems);

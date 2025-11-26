@@ -16,9 +16,9 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:4100',
+        target: 'http://pantryapi:4100',
         changeOrigin:true,
-        secure: false
+        rewrite: (path) => path.replace(/^\/api/,'')
       }
     },
     port: 5100,

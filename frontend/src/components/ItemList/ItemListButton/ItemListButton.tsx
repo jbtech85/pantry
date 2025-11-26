@@ -31,10 +31,10 @@ const ItemListButton = ({mode, action, item_id}: ButtonProps) => {
 
   const updateItemFn = async ({household_id, item_id}: itemFnParams) => {
     console.log(`household_id:${household_id}. item_id: ${item_id}`);
-    const resp = await fetch(`/api/household/${household_id}/item/${item_id}`, {
+    const resp = await fetch(`/api/items/${item_id}`, {
       method: 'PUT',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ "mode":mode, "action":action })
+      body: JSON.stringify({ "mode":mode, "action":action, "household_id":household_id })
     });
     if(!resp.ok) {
       throw new Error('Unable to remove item');
