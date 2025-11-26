@@ -6,7 +6,7 @@ const Pantry: React.FC = () => {
   return (
     <PantrySection>
       <ItemForm mode="pantry" />
-      {/* <ItemList mode="pantry" /> */}
+      <ItemList mode="pantry" />
     </PantrySection>
   )
 }

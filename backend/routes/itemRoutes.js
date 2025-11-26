@@ -13,35 +13,41 @@ router.get('/', (req, res) => {
 // look at a selected household's pantry
 router.get('/household/:household_id/pantry', async (req, res) => {
   const { household_id } = req.params;
-  console.log('calling get pantry');
-  const items = await pantryDB.collection('pantry_items').find({ household_id: household_id, inPantry:true}).toArray();
-  console.log(items);
-  console.log(typeof(items));
-  console.log('sanity marker');
+  const result = await pantryDB.collection('pantry_items').find({ inPantry:true, household_id: household_id}).toArray();
 
   if(!result){
     res.send("No items found").status(404);
   } else {
-    res.send(items).status(200);
+    res.send(result).status(200);
   }
 });
 
 // look at a selected household's grocery list
 router.get('/household/:household_id/grocerylist', async (req, res) => {
   const { household_id } = req.params;
-  const items = await pantryDB.collection('pantry_items').find({ household_id: household_id, onGroceryList:true}).toArray();
-  res.send(items);
+  const result = await pantryDB.collection('pantry_items').find({ onGroceryList:true, household_id: household_id}).toArray();
+  
+  if(!result){
+    res.send("No items found").status(404);
+  } else {
+    res.send(result).status(200);
+  }
 });
 
 // look at a selected household's past items
 router.get('/household/:household_id/past', async (req, res) => {
   const { household_id } = req.params;
-  const items = await pantryDB.collection('pantry_items').find({ household_id: household_id, inPantry:false, onGroceryList:false}).toArray();
-  res.send(items);
+  const result = await pantryDB.collection('pantry_items').find({ inPantry:false, onGroceryList:false, household_id: household_id}).toArray();
+  
+  if(!result){
+    res.send("No items found").status(404);
+  } else {
+    res.send(result).status(200);
+  }
 });
 
 // add an item to pantry/grocery
-router.post('/household/:household_id/item', async (req, res) => {
+router.post('/household/:household_id', async (req, res) => {
   console.log('call heard');
   const { household_id } = req.params;
   const { itemName, itemVariation, mode} = req.body;
@@ -55,13 +61,14 @@ router.post('/household/:household_id/item', async (req, res) => {
   newItem.onGroceryList = (mode == "grocerylist") ? true : false;
 
   const result = await pantryDB.collection('pantry_items').insertOne(newItem);
+  
   res.send(result);
 });
 
 // update an item's info
-router.put('/household/:household_id/:item_id', async (req, res) => {
-  const { household_id, item_id } = req.params;
-  const { mode, action } = req.body;
+router.put('/:item_id', async (req, res) => {
+  const { item_id } = req.params;
+  const { mode, action, household_id } = req.body;
 
   let inPantry, onGroceryList;
 
@@ -91,9 +98,19 @@ router.put('/household/:household_id/:item_id', async (req, res) => {
     updates['onGroceryList'] = onGroceryList;
   }
 
-  console.log(updates);
-  // const hid = ObjectId.createFromHexString(item_id);
+  const hid = ObjectId.createFromHexString(item_id);
   const result = await pantryDB.collection('pantry_items').findOneAndUpdate({ _id:hid, household_id:`${household_id}` }, {$set:updates});
+  res.send(result);
+});
+
+router.delete('/', async (req, res) => {
+  const { household_id, item_id_array } = req.body;
+  console.log('calling delete items');
+  console.log(item_id_array);
+
+  const objectified_id_array = item_id_array.map(item_id => ObjectId.createFromHexString(item_id))
+
+  const result = await pantryDB.collection('pantry_items').deleteMany({'_id':{'$in':objectified_id_array}, household_id:`${household_id}`})
   res.send(result);
 });
 

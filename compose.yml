@@ -16,6 +16,7 @@ services:
         - action: rebuild
           path: package.json
   api:
+    container_name: pantryapi
     restart: unless-stopped
     build: ./backend
     ports:

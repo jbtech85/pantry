@@ -33,7 +33,7 @@ const ItemForm: React.FC<ItemFormProps> = ({ mode }) => {
     let resp;
     // If truly new item, create new item
     if(/*creating a new item*/ 1 == 1) {
-      resp = await fetch(`/api/household/${household_id}/item/new`, {
+      resp = await fetch(`/api/items/household/${household_id}`, {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify({
