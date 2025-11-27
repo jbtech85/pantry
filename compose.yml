@@ -37,6 +37,9 @@ services:
   mongo:
     container_name: pantrydb
     image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ADMIN_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ADMIN_PASS}
     restart: unless-stopped
     volumes:
       - appdata:/data/pantrydb
