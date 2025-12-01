@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import styled from 'styled-components';
+import React from "react";
 import logo from "../../assets/images/pantryIconOne.png"
 
 const StyledNav = styled.nav`
