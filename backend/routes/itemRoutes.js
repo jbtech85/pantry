@@ -1,6 +1,7 @@
 import express from "express";
 import pantryDB from '../db/connection.js';
 import { ObjectId } from 'mongodb';
+import { getPantry } from '../controllers/itemControllers.js';
 
 const router = express.Router();
 
@@ -11,16 +12,7 @@ router.get('/', (req, res) => {
 });
 
 // look at a selected household's pantry
-router.get('/household/:household_id/pantry', async (req, res) => {
-  const { household_id } = req.params;
-  const result = await pantryDB.collection('pantry_items').find({ inPantry:true, household_id: household_id}).toArray();
-
-  if(!result){
-    res.send("No items found").status(404);
-  } else {
-    res.send(result).status(200);
-  }
-});
+router.get('/household/:household_id/pantry', getPantry());
 
 // look at a selected household's grocery list
 router.get('/household/:household_id/grocerylist', async (req, res) => {
