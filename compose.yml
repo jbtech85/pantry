@@ -21,6 +21,9 @@ services:
     build: ./backend
     ports:
       - "4100:4100"
+    volumes:
+      - .:/backend
+      - /backend/node_modules
     
     develop:
       watch:

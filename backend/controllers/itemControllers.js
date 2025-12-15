@@ -40,7 +40,6 @@ export const getPastItems = async (req, res) => {
 
 
 export const newItem = async (req, res) => {
-  console.log('call heard');
   const { household_id } = req.params;
   const { itemName, itemVariation, mode} = req.body;
 
