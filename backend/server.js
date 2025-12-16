@@ -13,14 +13,16 @@ app.use('/items', itemRoutes);
 app.use('/users', userRoutes);
 
 const URI = process.env.MONGO_REL_URI || "";
-mongoose.connect(URI)
-  .then(() => {
-    // connect and listen
-    app.listen(PORT, function() {
-      console.log('You are now tuned in to Port 4100');
-    });
-  })
-  .catch((err) => {
-    console.log(err);
-  })
+mongoose.connect(URI, {
+  dbName: 'pantry' 
+})
+.then(() => {
+  // connect and listen
+  app.listen(PORT, function() {
+    console.log('You are now tuned in to Port 4100');
+  });
+})
+.catch((err) => {
+  console.log(err);
+})
 

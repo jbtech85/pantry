@@ -21,9 +21,11 @@ services:
     build: ./backend
     ports:
       - "4100:4100"
-    volumes:
-      - .:/backend
-      - /backend/node_modules
+    
+    ## theoretically this helps argon2/bcrypt work in docker, but also it removes updates and requires a rebuild to see changes
+    #volumes:
+    #  - .:/backend
+    #  - /backend/node_modules
     
     develop:
       watch:
