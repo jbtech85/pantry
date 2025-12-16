@@ -27,6 +27,5 @@ router.put('/:item_id', updateItem);
 // delete items
 router.delete('/', deleteItems);
 
-console.log('item routes')
 
 export default router;
