@@ -1,7 +1,7 @@
-import { ItemLI } from "./ItemList.styles"
+import { ItemLI } from "./ItemList.styles";
 import ItemListButton from "./ItemListButton/ItemListButton";
 import { useState, useContext } from "react";
-import { useQuery } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query";
 import { HouseholdContext } from "../../context/userContext";
 import ItemListCheckbox from "./ItemListCheckbox/ItemListCheckbox";
 

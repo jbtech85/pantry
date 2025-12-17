@@ -67,7 +67,7 @@ userSchema.statics.login = async function (email, password) {
 
   const user = await this.findOne({ email });
   if(user) {
-    const verified = await verifyPassword(user.password,password);
+    const verified = await verifyPassword(user.password, password);
     if(!verified) {
       throw Error('Email or password is incorrect');
     }
