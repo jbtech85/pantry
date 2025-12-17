@@ -6,7 +6,7 @@ import GroceryListPage from "./pages/GroceryListPage";
 import RecipeListPage, { recipeListLoader } from "./pages/RecipeListPage";
 import RecipePage, { recipeLoader } from "./pages/RecipePage";
 import PastItemsPage from "./pages/PastItemsPage";
-
+import { AuthContextProvider } from "./context/userContext";
 
 const routes = [{
   path: '/',
@@ -38,7 +38,9 @@ const router = createBrowserRouter(routes as any);
 
 function App() {
   return (
-    <RouterProvider router={router} />
+    <AuthContextProvider>
+      <RouterProvider router={router} />
+    </AuthContextProvider>      
   );
 }
 
