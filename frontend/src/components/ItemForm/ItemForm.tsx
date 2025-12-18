@@ -63,6 +63,7 @@ const ItemForm: React.FC<ItemFormProps> = ({ mode }) => {
       throw new Error('Unable to add item');
     }
   }
+  
   return (
     <form action={addItem}>
       <label><span>*</span>Item: 
