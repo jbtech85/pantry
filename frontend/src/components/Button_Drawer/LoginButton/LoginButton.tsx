@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom";
 import styled from "styled-components"
 
 const ButtonDiv = styled.div`
@@ -22,7 +23,8 @@ const LoginButton = () => {
 
   return (
       <ButtonDiv>
-        <button onClick={() => setIsAuthed(!isAuthed)}>{isAuthed ? "Log out" : "Log in"}</button>
+        {/* <button onClick={() => setIsAuthed(!isAuthed)}>{isAuthed ? "Log out" : "Log in"}</button> */}
+        <Link to='../../logina'>Login</Link>
       </ButtonDiv>
   )
 }

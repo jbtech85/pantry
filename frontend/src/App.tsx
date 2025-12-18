@@ -6,6 +6,8 @@ import GroceryListPage from "./pages/GroceryListPage";
 import RecipeListPage, { recipeListLoader } from "./pages/RecipeListPage";
 import RecipePage, { recipeLoader } from "./pages/RecipePage";
 import PastItemsPage from "./pages/PastItemsPage";
+import SignupPage from "./pages/SignupPage";
+import LoginPage from "./pages/LoginPage";
 import { AuthContextProvider } from "./context/userContext";
 
 const routes = [{
@@ -30,6 +32,12 @@ const routes = [{
       path: '/recipes/name/:name',
       element: <RecipePage />,
       loader: recipeLoader
+    }, {
+      path: '/signup',
+      element: <SignupPage />
+    }, {
+      path: '/login',
+      element: <LoginPage />
     }
   ]
 }]
