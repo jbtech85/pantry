@@ -5,6 +5,17 @@ import styled from "styled-components"
 const ButtonDiv = styled.div`
   margin-left: auto;
 
+  a {
+    background: hsl(16 70% 51%);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-family: Arial;
+    font-size: 14px;
+    padding: 5px 10px;
+    text-decoration: none;
+  }
+
   button {
     background: hsl(10 85% 53% / 80%);
     border: none;
@@ -24,7 +35,7 @@ const LoginButton = () => {
   return (
       <ButtonDiv>
         {/* <button onClick={() => setIsAuthed(!isAuthed)}>{isAuthed ? "Log out" : "Log in"}</button> */}
-        <Link to='../../logina'>Login</Link>
+        <Link to='/login'>Login</Link>
       </ButtonDiv>
   )
 }

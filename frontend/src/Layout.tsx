@@ -5,7 +5,6 @@ import styled from 'styled-components'
 
 const LayoutDiv = styled.div`
   display: flex;
-  justify-content: space-between;
   height: 100vw;
 
   > div {
