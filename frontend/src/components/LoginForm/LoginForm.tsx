@@ -5,6 +5,8 @@ const LoginForm = () => {
   const signup = async (formData: FormData) => {
     let email = formData.get("email");
     let password = formData.get("password");
+
+    console.log(`email: ${email}. password: ${password}`);
   }
 
   return (
