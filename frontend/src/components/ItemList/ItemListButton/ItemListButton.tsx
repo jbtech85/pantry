@@ -34,7 +34,7 @@ const ItemListButton = ({mode, action, item_id}: ButtonProps) => {
     const resp = await fetch(`/api/items/${item_id}`, {
       method: 'PUT',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ "mode":mode, "action":action, "household_id":household_id })
+      body: JSON.stringify({ mode, action, household_id })
     });
     if(!resp.ok) {
       throw new Error('Unable to remove item');

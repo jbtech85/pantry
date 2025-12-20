@@ -1,31 +1,6 @@
-import { Link } from "react-router-dom"
-import styled from 'styled-components';
-import React from "react";
-import logo from "../../assets/images/pantryIconOne.png"
-
-const StyledNav = styled.nav`
-  background: hsl(10 85% 83% / 80%);
-
-  ul {
-    list-style: none;
-    padding-inline-start: 5px;
-
-    li {
-      padding: 0px 10px 10px 5px;
-
-      a {
-        color: black;
-        font-family: 'Poppins', sans-serif;
-        font-weight: bold;
-        text-decoration: none;
-
-        &:hover {
-          color: #e08d12e1;
-        }
-      }
-    }
-  }
-`
+import { Link } from "react-router-dom";
+import logo from "../../assets/images/pantryIconOne.png";
+import { StyledNav } from './Navbar.styles';
 
 
 export default function Navbar(){
