@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { StyledLoginForm } from "./LoginForm.styles";
+import { StyledLoginForm } from "../../styles/forms.styles";
 
 const LoginForm = () => {
   const signup = async (formData: FormData) => {

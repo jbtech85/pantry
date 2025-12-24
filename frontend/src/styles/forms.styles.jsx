@@ -30,6 +30,6 @@ export const StyledLoginForm = styled.form`
       color: #2401e8;
     }
   }
-
-
 `
+
+export const StyledSignupForm = StyledLoginForm;
