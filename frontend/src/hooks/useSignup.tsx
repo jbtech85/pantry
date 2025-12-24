@@ -1,12 +1,15 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"
 import { useAuthContext } from "./useAuthContext";
 
 export const useSignup = () => {
-  const [error, setError] = useState<null | unknown>(null);
-  const [isLoading, setIsLoading] = useState<null | boolean>(null);
-  const { dispatch } = useAuthContext;
+  const [error, setError] = useState(null); // Type 'unknown' is not assignable to type 'ReactNode'.ts(2322)
+  const [isLoading, setIsLoading] = useState(false);
 
-  const signup = async (email: string, password: string) => {
+  const { dispatch } = useAuthContext();
+  const navigate = useNavigate();
+
+  const signup = async (email: FormDataEntryValue | null, password: FormDataEntryValue | null) => {
     setIsLoading(true);
 
     // reset on each attempt
@@ -25,9 +28,11 @@ export const useSignup = () => {
       localStorage.setItem('pantrydata_user', JSON.stringify(json));
 
       // update the auth context
-      dispatch({type: 'Login', payload: json});
+      dispatch({type: 'LOGIN', payload: json});
 
       setIsLoading(false);
+
+
     } 
     if(!resp.ok) {
       setIsLoading(false);

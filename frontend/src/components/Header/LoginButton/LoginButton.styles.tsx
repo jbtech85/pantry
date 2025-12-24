@@ -1,8 +1,6 @@
-import { useState } from "react"
-import { Link } from "react-router-dom";
-import styled from "styled-components"
+import styled from "styled-components";
 
-const ButtonDiv = styled.div`
+export const ButtonDiv = styled.div`
   margin-left: auto;
 
   a {
@@ -28,15 +26,3 @@ const ButtonDiv = styled.div`
     whitespace: nowrap;
   }
 `;
-
-const LoginButton = () => {
-  const[isAuthed, setIsAuthed] = useState(false);
-
-  return (
-      <ButtonDiv>
-        {/* <button onClick={() => setIsAuthed(!isAuthed)}>{isAuthed ? "Log out" : "Log in"}</button> */}
-        <Link to='/login'>Login</Link>
-      </ButtonDiv>
-  )
-}
-export default LoginButton
