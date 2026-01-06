@@ -1,6 +1,6 @@
 
 import { StyledHeader } from "./Header.styles";
-import LoginButton from "../Button_Drawer/LoginButton/LoginButton";
+import LoginButton from "./LoginButton/LoginButton";
 
 const Header = () => {
   return (
