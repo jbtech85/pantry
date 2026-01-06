@@ -1,17 +1,21 @@
+import { useLogin } from "../../hooks/useLogin";
 import { Link } from "react-router-dom";
 import { StyledLoginForm } from "../../styles/forms.styles";
 
 const LoginForm = () => {
-  const signup = async (formData: FormData) => {
+  const {login, error, isLoading} = useLogin();
+  
+  const handleLogin = async (formData: FormData) => {
     let email = formData.get("email");
     let password = formData.get("password");
 
-    console.log(`email: ${email}. password: ${password}`);
+    await login(email, password);
   }
+
 
   return (
     <>
-      <StyledLoginForm action={signup}>
+      <StyledLoginForm action={handleLogin}>
         <label>Email:&nbsp;
           <input type="email" name="email" />
         </label>
