@@ -5,10 +5,10 @@ export const useLogout = () => {
 
   const logout = () => {
     // remove from local storage
-    localStorage.removeItem('user');
+    localStorage.removeItem('pantrydata_user');
 
     dispatch({type: 'LOGOUT'});
   }
 
-  return logout;
+  return { logout };
 }

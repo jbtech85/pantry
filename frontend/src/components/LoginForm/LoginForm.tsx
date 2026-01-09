@@ -24,13 +24,14 @@ const LoginForm = () => {
           <input type="password" name="password" />
         </label>
         <br />
-        <button type="submit">
+        <button disabled={isLoading} type="submit">
           Login
         </button>
         <br /><br /><br />
         <span>Need to create an account? <Link to='/signup'>Click here</Link></span>
       </StyledLoginForm>
       
+      {error && <div className="error">{error}</div>}
     </>
   )
 }
