@@ -3,8 +3,23 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import itemRoutes from './routes/itemRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+import pg from 'pg';
 
-const PORT = process.env.PORT || 4101;
+const pool = new pg.Pool({
+  host: 'localhost',
+  port: process.env.POSTGRES_PORT,
+  user: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  database: process.env.POSTGRES_DB
+});
+
+async function main() {
+  const client = await pool.connect();
+}
+
+
+
+const PORT = process.env.PORT;
 const app = express();
 
 app.use(cors());

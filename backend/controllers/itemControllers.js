@@ -14,6 +14,8 @@ export const getPantry = async (req, res) => {
   }
 };
 
+// export const getPantryPG = async (req, res)
+
 
 export const getGrocery = async (req, res) => {
   const { household_id } = req.params;
