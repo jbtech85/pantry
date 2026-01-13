@@ -39,6 +39,7 @@ services:
           path: package.json
     depends_on:
       - mongo
+      - postgres
   mongo:
     container_name: pantrydb
     image: mongo
@@ -51,5 +52,21 @@ services:
     ports:
       - "27117:27117"
     command: --port 27117 ## Docker containers in same compose file still see mongo as 27017 otherwise
+
+  postgres:
+    image: postgres
+    container_name: pantrypg
+    volumes:
+      - appdata:/data/pantrypg
+    env_file:
+      - ./backend/.env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "4321:4321"
+
+
 volumes:
   appdata:
