@@ -6,7 +6,7 @@ import userRoutes from './routes/userRoutes.js';
 import pg from 'pg';
 
 const pool = new pg.Pool({
-  host: 'localhost',
+  host: process.env.POSTGRES_HOST,
   port: process.env.POSTGRES_PORT,
   user: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
@@ -15,11 +15,12 @@ const pool = new pg.Pool({
 
 async function main() {
   const client = await pool.connect();
+  console.log('calling main pool connect');
 }
 
 
 
-const PORT = process.env.PORT;
+const PORT = process.env.SERVER_PORT;
 const app = express();
 
 app.use(cors());
@@ -34,7 +35,7 @@ mongoose.connect(URI, {
 .then(() => {
   // connect and listen
   app.listen(PORT, function() {
-    console.log('You are now tuned in to Port 4100');
+    console.log(`You are now tuned in to Port ${process.env.SERVER_PORT}`);
   });
 })
 .catch((err) => {
