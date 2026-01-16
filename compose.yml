@@ -1,9 +1,10 @@
 services:
   client:
+    container_name: pantryclient
     restart: unless-stopped
     build: ./frontend
     ports:
-      - "5100:5100"
+      - "${CLIENT_PORT}:${CLIENT_PORT}"
     # lets us hot reload with vite
     develop:
       watch:
@@ -19,14 +20,10 @@ services:
     container_name: pantryapi
     restart: unless-stopped
     build: ./backend
+    env_file:
+      - .env
     ports:
-      - "4100:4100"
-    
-    ## theoretically this helps argon2/bcrypt work in docker, but also it removes updates and requires a rebuild to see changes
-    #volumes:
-    #  - .:/backend
-    #  - /backend/node_modules
-    
+      - "${SERVER_PORT}:${SERVER_PORT}"
     develop:
       watch:
         - action: sync
@@ -40,6 +37,7 @@ services:
     depends_on:
       - mongo
       - postgres
+
   mongo:
     container_name: pantrydb
     image: mongo
@@ -54,19 +52,32 @@ services:
     command: --port 27117 ## Docker containers in same compose file still see mongo as 27017 otherwise
 
   postgres:
-    image: postgres
+    image: postgres:18.1-alpine
     container_name: pantrypg
     volumes:
       - appdata:/data/pantrypg
     env_file:
-      - ./backend/.env
+      - .env
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    restart: unless-stopped
     ports:
-      - "4321:4321"
-
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    command: "-p ${POSTGRES_PORT}"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -p ${POSTGRES_PORT} -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      start_period: 0s
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 volumes:
   appdata:
+
+  # - .:/api
+  # - /api/node_modules
+
+  # databasepg-v:
+  #   name: "database-v"

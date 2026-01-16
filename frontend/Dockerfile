@@ -12,6 +12,4 @@ RUN npm install
 # Copy app code to WORKDIR
 COPY . .
 
-EXPOSE 5100
-
 CMD [ "npm", "run", "dev" ]

@@ -1,29 +1,33 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
-export default defineConfig({
-  base: "/",
-  plugins: [
-    react()
-  ],
-  preview: {
-    port: 5100,
-    strictPort: true
-  },
-  server: {
-    proxy: {
-      '/api': {
-        target: 'http://pantryapi:4100',
-        changeOrigin:true,
-        rewrite: (path) => path.replace(/^\/api/,'')
-      }
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '');
+
+  return {
+    base: "/",
+    plugins: [
+      react()
+    ],
+    preview: {
+      port: process.env.CLIENT_PORT,
+      strictPort: true
     },
-    port: 5100,
-    strictPort: true,
-    host: true,
-    watch: {
-      usePolling: true
+    server: {
+      proxy: {
+        '/api': {
+          target: `http://pantryapi:${env.SERVER_PORT}`,
+          changeOrigin:true,
+          rewrite: (path) => path.replace(/^\/api/,'')
+        }
+      },
+      port: env.CLIENT_PORT,
+      strictPort: true,
+      host: true,
+      watch: {
+        usePolling: true
+      }
     }
-  }
-})
+  };
+});
