@@ -1,5 +1,6 @@
 import pantryDB from '../db/connection.js';
 import { ObjectId } from 'mongodb';
+import { poolQuery } from '../db/connection.js';
 
 
 
@@ -14,7 +15,13 @@ export const getPantry = async (req, res) => {
   }
 };
 
-// export const getPantryPG = async (req, res)
+export const getPantryPG = async (req, res) => {
+  const { household_id } = req.params;
+
+  const { data, status } = await poolQuery(`SELECT name, variation FROM item WHERE household_id = ${household_id} AND isPantry = true`);
+  
+  res.send(data.rows).status(status);    
+}
 
 
 export const getGrocery = async (req, res) => {
