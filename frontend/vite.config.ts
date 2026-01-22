@@ -20,7 +20,7 @@ export default defineConfig(({ mode }) => {
           target: `http://pantryapi:${env.SERVER_PORT}`,
           changeOrigin:true,
           rewrite: (path) => path.replace(/^\/api/,'')
-        }
+        }        
       },
       port: env.CLIENT_PORT,
       strictPort: true,

@@ -1,6 +1,6 @@
 import pantryDB from '../db/connection.js';
 import { ObjectId } from 'mongodb';
-import { poolQuery } from '../db/connection.js';
+import poolQuery from '../db/connection.js';
 
 
 
@@ -20,7 +20,12 @@ export const getPantryPG = async (req, res) => {
 
   const { data, status } = await poolQuery(`SELECT name, variation FROM item WHERE household_id = ${household_id} AND isPantry = true`);
   
-  res.send(data.rows).status(status);    
+  if(status == 200) {
+    res.send(data.rows).status(status);
+  } else {
+    console.log(data);
+    res.send(data).status(status);
+  }
 }
 
 

@@ -11,7 +11,7 @@ CREATE TABLE household (
   name VARCHAR(100) NOT NULL,
   description VARCHAR (255),
   date_created TIMESTAMP NOT NULL,
-)
+);
 
 CREATE TABLE user_household (
   user_household_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -19,7 +19,7 @@ CREATE TABLE user_household (
   household_fk INTEGER NOT NULL,
   is_admin BOOLEAN,
   date_created TIMESETAMP NOT NULL
-)
+);
 
 CREATE TABLE pantry_item (
   item_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -29,5 +29,5 @@ CREATE TABLE pantry_item (
   isPantry BOOLEAN,
   isGrocery BOOLEAN,
   household_fk INTEGER NOT NULL
-)
+);
 
