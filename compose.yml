@@ -35,49 +35,33 @@ services:
         - action: rebuild
           path: package.json
     depends_on:
-      - mongo
-      - postgres
+      postgres:
+        condition: service_healthy
 
-  mongo:
-    container_name: pantrydb
-    image: mongo
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ADMIN_USER}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ADMIN_PASS}
-    restart: unless-stopped
-    volumes:
-      - appdata:/data/pantrydb
-    ports:
-      - "27117:27117"
-    command: --port 27117 ## Docker containers in same compose file still see mongo as 27017 otherwise
 
   postgres:
     image: postgres:18.1-alpine
     container_name: pantrypg
     volumes:
-      - appdata:/data/pantrypg
+      - db_data:/data/pantrypg
+      - ./init:/docker-entrypoint-initdb.d:ro
     env_file:
       - .env
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PGUSER: ${POSTGRES_DB}
     restart: unless-stopped
     ports:
       - "${POSTGRES_PORT}:${POSTGRES_PORT}"
     command: "-p ${POSTGRES_PORT}"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -p ${POSTGRES_PORT} -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       start_period: 0s
       interval: 5s
-      timeout: 5s
-      retries: 5
+      timeout: 3s
+      retries: 10
 
 volumes:
-  appdata:
-
-  # - .:/api
-  # - /api/node_modules
-
-  # databasepg-v:
-  #   name: "database-v"
+  db_data: {}
