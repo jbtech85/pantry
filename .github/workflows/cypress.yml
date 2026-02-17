@@ -14,7 +14,8 @@ jobs:
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
         ports:
-          - 5432:${{ secrets.POSTGRES_PORT }}
+          # I really want to use ${{ secrets.POSTGRES_PORT }} here and it won't let me. 5432 it is, then
+          - 5432:5432
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
