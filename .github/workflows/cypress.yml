@@ -42,6 +42,7 @@ jobs:
           # runs command in background to allow continued shell command use
           run: |
             echo "Starting server from /backend folder"
+            echo "${{secrets.A_WHOLE_ENV_FILE }}" > .env
             npm run dev &
             echo "Waiting for server to be ready"
             while ! nc -z localhost ${{ secrets.SERVER_PORT }}; do
