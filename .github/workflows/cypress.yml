@@ -1,0 +1,60 @@
+name: Testing Cypress
+
+on: [push, workflow_dispatch]
+
+jobs:
+  run-cypress:
+    runs-on: ubuntu-24.04
+
+    services:
+      postgres:
+        image: postgres:18.1
+        env:
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+        ports:
+          # I really want to use ${{ secrets.POSTGRES_PORT }} here and it won't let me. 5432 it is, then
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+
+        - name: Set up Node
+          uses: actions/setup-node@v6
+          with:
+            node-version: "24"
+
+        - name: Install server dependencies
+          working-directory: ./backend
+          run: npm install
+
+        - name: Start project server
+          working-directory: ./backend
+          # bash >> npm run dev &
+          # powershell >> Start-Process npm run dev
+          # runs command in background to allow continued shell command use
+          run: |
+            echo "Starting server from /backend folder"
+            echo "${{secrets.A_WHOLE_ENV_FILE }}" > .env
+            npm run dev &
+            echo "Waiting for server to be ready"
+            while ! nc -z localhost ${{ secrets.SERVER_PORT }}; do
+              echo "Waiting for server"
+              sleep 5
+            done
+
+        - name: run Cypress
+          uses: cypress-io/github-action@v6
+
+        - name: Install dependencies
+          run: npm install
+
+        - name: run Cypress tests
+          run: npx cypress run
