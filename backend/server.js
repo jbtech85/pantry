@@ -10,7 +10,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json()); 
-// app.use('/items', itemRoutes);
+app.use('/items', itemRoutes);
 // app.use('/users', userRoutes);
 
 // TODO: replace mongodb check with postgres check after routes are confirmed working

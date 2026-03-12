@@ -7,7 +7,7 @@ export const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { dispatch } = useAuthContext();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const login = async (email: FormDataEntryValue | null, password: FormDataEntryValue | null) => {
     setIsLoading(true);

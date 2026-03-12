@@ -1,13 +1,13 @@
 /// File used as connection for controllers
 import { MongoClient, ServerApiVersion } from 'mongodb';
-import pg from 'pg';
+import { Pool } from 'pg';
 
 
 /************ postgresql ***********/
 // set up postgres Pool
-export const pgPool = new pg.Pool({
-  host: process.env.POSTGRES_HOST,
-  port: process.env.POSTGRES_PORT,
+export const pgPool = new Pool({
+  host: "pantrypg",
+  port: 5432,
   user: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB
@@ -21,6 +21,7 @@ try {
   console.log((`Postgres ping successful`));
 } catch (err) {
   console.log(`Postgres connection failed:${err.message}`);
+  console.log(err);
 }
 
 

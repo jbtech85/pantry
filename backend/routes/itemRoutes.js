@@ -1,7 +1,9 @@
 import express from "express";
-import { getPantry, getPantryPG, getGrocery, getPastItems, newItem, updateItem, deleteItems } from '../controllers/itemControllers.js';
+import { getPantry, getGrocery, getPastItems, newItem, updateItem, deleteItems } from '../controllers/itemControllers.js';
 
 const router = express.Router();
+
+console.log("itemRoutes log");
 
 // general DB test
 router.get('/', (req, res) => {
@@ -11,7 +13,6 @@ router.get('/', (req, res) => {
 
 // look at a selected household's pantry
 router.get('/household/:household_id/pantry', getPantry);
-router.get('/household/:household_id/pantrypg', getPantryPG);
 
 // look at a selected household's grocery list
 router.get('/household/:household_id/grocerylist', getGrocery);
