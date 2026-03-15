@@ -3,11 +3,10 @@ import { getPantry, getGrocery, getPastItems, newItem, updateItem, deleteItems }
 
 const router = express.Router();
 
-console.log("itemRoutes log");
-
 // general DB test
+// http://localhost:PORT/api/items === '/'
 router.get('/', (req, res) => {
-  res.send('Connection confirmed')/
+  res.send('Connection confirmed');
   console.log('connection attempted');
 });
 

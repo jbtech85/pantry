@@ -27,6 +27,8 @@ const ItemList: React.FC<ItemListProps> = ({mode}) => {
 
   const household_id = useContext(HouseholdContext);  
 
+  console.log(`household_id: ${household_id}`);
+
   // Grab data from our data source via Tanstack
   const pantryQry = useQuery({
     queryKey: [`${mode}Items`],

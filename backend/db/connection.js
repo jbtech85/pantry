@@ -37,9 +37,9 @@ const poolQuery = async (qry) => {
     status = 500;
   }
   
-  // if(data.rows !== undefined && data.rows.length === 0){
-  //   status = 404;  
-  // }
+  if(data.rows !== undefined && data.rows.length === 0){
+    status = 404;  
+  }
 
   return { "data": data, "status": status };
 }
