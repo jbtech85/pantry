@@ -27,11 +27,17 @@ const LoginForm = () => {
         <button disabled={isLoading} type="submit">
           Login
         </button>
-        <br /><br /><br />
+        <br /><br />
+
+        {error && 
+          <span className="formError">{error}</span>}
+
+        <br /><br />
         <span>Need to create an account? <Link to='/signup'>Click here</Link></span>
+        
+        
       </StyledLoginForm>
       
-      {error && <div className="error">{error}</div>}
     </>
   )
 }
