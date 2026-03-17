@@ -53,8 +53,8 @@ jobs:
         - name: run Cypress
           uses: cypress-io/github-action@v6
           with:
-            # working-directory: ./frontend ## one possibility
+            # working-directory: ./frontend 
             project: ./frontend ## from older docs
-            
+
             
 

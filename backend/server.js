@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import poolQuery from '../db/connection.js';
+import poolQuery from './db/connection.js';
 import itemRoutes from './routes/itemRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 
@@ -15,7 +15,7 @@ const router = express.Router();
 
 router.get('/health', async (req, res) => {
   try {
-    await pgPool.query('SELECT 0 FROM account');
+    await poolQuery('SELECT 0 FROM account');
     res.status(200).json({ status: 'ok' });
   } catch {
     res.status(503).json({ status: 'db unavailable' });
