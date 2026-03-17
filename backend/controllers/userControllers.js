@@ -37,8 +37,6 @@ export const userSignup = async (req, res) => {
       values: [email]
     });
 
-    console.log(userExists);
-
     if(userExists.data.rows.length > 0) {
       return res.status(409).json({ error: `User with email ${email} already exists`});
     }
@@ -48,11 +46,9 @@ export const userSignup = async (req, res) => {
     const newUser = await poolQuery({
       text: 'INSERT INTO account (email, password) VALUES ($1, $2) RETURNING account_id',
       values: [email, hashword]
-    })
+    });
 
-    console.log(newUser);
-    console.log(newUser.data.rows[0].account_id);
-
+    // signs in the user
     const token = createToken(newUser.data.rows[0].account_id);
 
     res.status(200).json({email, token});
@@ -66,10 +62,31 @@ export const userSignup = async (req, res) => {
 export const userLogin = async (req, res) => {
   const { email, password } = req.body;
 
-  try {
-    const user = await User.login(email, password);
+  console.log(`email: ${email}. password: ${password}`);
 
-    const token = createToken(user._id);
+  try {
+    if(!email || !password) {
+      throw Error('All fields must be completed');
+    }
+
+    const userInfo = await poolQuery({
+      text: 'SELECT account_id, password FROM account WHERE email = $1',
+      values: [email]
+    });
+
+
+    if(userInfo.data.rows.length > 0) {
+      const verified = await verifyPassword(userInfo.data.rows[0].password, password);
+      console.log('Found password: ', userInfo.data.rows[0].password);
+      console.log(`Entered password: ${password}`);
+      if(!verified) {
+        throw Error('Email or password is incorrect1');
+      }
+    } else {
+      throw Error ('Email or password is incorrect2');
+    }
+
+    const token = createToken(userInfo.data.rows[0].account_id);
 
     res.status(200).json({email, token});
   } catch (err) {

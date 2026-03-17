@@ -25,9 +25,6 @@ const LoginButton = () => {
           {user &&
             <button onClick={handleClick}>Logout</button> }
         </ButtonDiv>
-      
-        {user &&
-          <span>You are currently user {user.email}</span>}
       </>
       
       // <button onClick={() => navigate('/login')}>{isAuthed ? "Log out" : "Log in"}</button>

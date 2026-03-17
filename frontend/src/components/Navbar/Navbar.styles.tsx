@@ -22,4 +22,8 @@ export const StyledNav = styled.nav`
       }
     }
   }
-`
+`;
+
+export const UserSpan = styled.span`
+  color: hsl(0, 0%, 30%);
+`;

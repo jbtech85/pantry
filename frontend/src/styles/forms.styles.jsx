@@ -30,6 +30,12 @@ export const StyledLoginForm = styled.form`
       color: #2401e8;
     }
   }
+
+  span.formError {
+    color: hsl(0, 80%, 50%);
+    font-size: 14px;
+    padding-top: 20px;
+  }
 `
 
 export const StyledSignupForm = StyledLoginForm;
