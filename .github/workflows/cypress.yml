@@ -52,9 +52,9 @@ jobs:
 
         - name: run Cypress
           uses: cypress-io/github-action@v6
+          with:
+            # working-directory: ./frontend ## one possibility
+            project: ./frontend ## from older docs
+            
+            
 
-        - name: Install dependencies
-          run: npm install
-
-        - name: run Cypress tests
-          run: npx cypress run
