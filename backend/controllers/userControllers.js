@@ -51,7 +51,9 @@ export const userSignup = async (req, res) => {
     // signs in the user
     const token = createToken(newUser.data.rows[0].account_id);
 
-    res.status(200).json({email, token});
+    const newID = newUser.data.rows[0].account_id;
+
+    res.status(200).json({newID, email, token});
   } catch (err) {
     res.status(400).json({error: err.message});
   }
@@ -62,15 +64,13 @@ export const userSignup = async (req, res) => {
 export const userLogin = async (req, res) => {
   const { email, password } = req.body;
 
-  console.log(`email: ${email}. password: ${password}`);
-
   try {
     if(!email || !password) {
       throw Error('All fields must be completed');
     }
 
     const userInfo = await poolQuery({
-      text: 'SELECT account_id, password FROM account WHERE email = $1',
+      text: 'SELECT account_id, password, default_household_fk FROM account WHERE email = $1',
       values: [email]
     });
 
@@ -87,8 +87,15 @@ export const userLogin = async (req, res) => {
     }
 
     const token = createToken(userInfo.data.rows[0].account_id);
+    const userID = userInfo.data.rows[0].account_id;
+    const default_household_fk = userInfo.data.rows[0].default_household_fk;
+    if(!default_household_fk) {
+      default_household_fk = 1;
+    }
 
-    res.status(200).json({email, token});
+    console.log(`defaultfk is ${default_household_fk}`);
+
+    res.status(200).json({userID, email, default_household_fk, token});
   } catch (err) {
     res.status(400).json({error: err.message});
   }

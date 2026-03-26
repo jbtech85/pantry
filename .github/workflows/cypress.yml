@@ -54,7 +54,4 @@ jobs:
           uses: cypress-io/github-action@v6
           with:
             working-directory: ./frontend 
-            # project: ./frontend ## from older docs
-
-            
-
+            wait-on: 'http://localhost:${{ secrets.CLIENT_PORT }}/api/health'

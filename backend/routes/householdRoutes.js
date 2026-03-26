@@ -7,6 +7,7 @@ const router = express.Router();
 
 // create a household
 router.post('/api/household', async (req, res) => {
+  // take into consideration if this will be the default
   const { name, description, initialUser } = req.body;
   const newHousehold = { 
     name: name, 
@@ -26,3 +27,8 @@ router.get('/household/:household_id', async (req, res) => {
   const household = await pantryDB.collection('households').findOne({ _id:hid});
   res.send(household);
 });
+
+
+
+
+// set use household to default

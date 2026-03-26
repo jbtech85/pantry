@@ -14,7 +14,6 @@ export const pgPool = new Pool({
 });
 
 
-
 // check connection
 try {
   const ping = await pgPool.query("SELECT NOW()");
@@ -31,7 +30,6 @@ const poolQuery = async (qry) => {
 
   try {
     data = await pgPool.query(qry);
-    console.log(`type is ${typeof(data)}`);
   } catch (error) {
     data = error;
     status = 500;
