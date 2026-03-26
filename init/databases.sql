@@ -2,6 +2,7 @@ CREATE TABLE account (
   account_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   email VARCHAR(255) UNIQUE NOT NULL,
   password VARCHAR(255) NOT NULL,
+  default_household_fk INTEGER,
   date_created TIMESTAMP DEFAULT now(),
   last_login TIMESTAMP
 );
@@ -12,6 +13,9 @@ CREATE TABLE household (
   description VARCHAR (255),
   date_created TIMESTAMP DEFAULT now()
 );
+
+INSERT INTO household (name, description)
+  VALUES ('authed','an indicator for authed users who do not have a default household');
 
 CREATE TABLE account_household (
   user_household_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,

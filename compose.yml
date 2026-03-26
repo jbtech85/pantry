@@ -3,6 +3,8 @@ services:
     container_name: pantryclient
     restart: unless-stopped
     build: ./frontend
+    env_file:
+      - .env
     ports:
       - "${CLIENT_PORT}:${CLIENT_PORT}"
     # lets us hot reload with vite

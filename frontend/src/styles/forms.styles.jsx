@@ -36,6 +36,16 @@ export const StyledLoginForm = styled.form`
     font-size: 14px;
     padding-top: 20px;
   }
+
+  div#divRadio {
+    font-size: 12px;
+    span {
+      font-size: 12px;
+    }
+    label {
+      text-align: left;
+    }
+  }
 `
 
 export const StyledSignupForm = StyledLoginForm;

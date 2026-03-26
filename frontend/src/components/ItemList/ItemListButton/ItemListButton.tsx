@@ -1,7 +1,7 @@
 
-import { TiDeleteOutline } from "react-icons/ti"
-import { RiFilePaper2Line } from "react-icons/ri"
-import { LuCopyPlus } from "react-icons/lu"
+import { TiDeleteOutline } from "react-icons/ti";
+import { RiFilePaper2Line } from "react-icons/ri";
+import { LuCopyPlus } from "react-icons/lu";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useContext } from "react";
 import { HouseholdContext } from "../../../context/userContext";

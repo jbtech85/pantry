@@ -3,13 +3,6 @@ import { getPantry, getGrocery, getPastItems, newItem, updateItem, deleteItems }
 
 const router = express.Router();
 
-// general DB test
-// http://localhost:PORT/api/items === '/'
-router.get('/', (req, res) => {
-  res.send('Connection confirmed');
-  console.log('connection attempted');
-});
-
 // look at a selected household's pantry
 router.get('/household/:household_id/pantry', getPantry);
 
