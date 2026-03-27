@@ -25,15 +25,15 @@ const ItemList: React.FC<ItemListProps> = ({mode}) => {
     }
   }
 
-  const household_id = useContext(HouseholdContext);  
+  const { householdID, setHouseholdI } = useContext(HouseholdContext);  
 
-  console.log(`household_id: ${household_id}`);
+  console.log(`household_id: ${householdID}`);
 
   // Grab data from our data source via Tanstack
   const pantryQry = useQuery({
     queryKey: [`${mode}Items`],
     queryFn: async () => {
-      const mongoItems = `/api/items/household/${household_id}/${mode}`;
+      const mongoItems = `/api/items/household/${householdID}/${mode}`;
 
       let fetchedItems = mongoItems;
       const response = await fetch(fetchedItems);

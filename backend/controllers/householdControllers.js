@@ -5,7 +5,7 @@ export const getDefaultHousehold = async (req, res) => {
   const { account_id } = req.params;
 
   const { data, status } = await poolQuery({
-    text: 'SELECT household_fk FROM account_household WHERE account_id = $1',
+    text: 'SELECT default_household_fk FROM account WHERE account_id = $1',
     values: [account_id]
   });
 

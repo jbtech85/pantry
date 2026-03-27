@@ -1,8 +1,15 @@
 import express from "express";
+import { getDefaultHousehold } from '../controllers/householdControllers.js'; 
+
+
 import pantryDB from '../db/connection';
-import { ObjectId } from 'mongodb';
+
 
 const router = express.Router();
+
+
+// get default household
+router.get('/api/household/default/:account_id', getDefaultHousehold);
 
 
 // create a household
