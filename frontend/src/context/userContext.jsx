@@ -22,7 +22,6 @@ export const AuthContextProvider = ({ children }) => {
   // restore user from localStorage on mount
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('pantrydata_user'));
-
     if(user){
       dispatch({ type: 'LOGIN', payload: user });
     }
@@ -37,37 +36,26 @@ export const AuthContextProvider = ({ children }) => {
 
     const fetchHousehold = async () => {
       try {
-        
+        const res = await fetch(`/api/household/default/${state.user.userID}`);
+        const json = await res.json();
+
+        // default to 1 if no default household
+        setHouseholdID(json.household_id ?? 1);
       } catch (err) {
         console.log('Unable to fetch household: ', err);
+        setHouseholdID(1);
       }
     };
-  });
 
-  console.log('AuthContext state: ', state);
-  if(state.user !== null) {
-    console.log(state.user.userID);
-    userID = state.user.userID;
-  }
+    fetchHousehold();
+  }, [state.user]);
 
   return (
     <AuthContext.Provider value={{...state, dispatch}}>
-      { children }
+      <HouseholdContext.Provider value={{householdID, setHouseholdID}}>
+        { children }
+      </HouseholdContext.Provider>
     </AuthContext.Provider>
-  )
-}
+  );
+};
 
-
-
-let household_id;
-// TODO: use logic to get household of current user
-// SELECT household_fk FROM account_household WHERE account_fk = 1;
-household_id = 1;
-
-// if no household is set (user is not logged in)
-if(!household_id){
-  // default to 0 for anonymous users
-  household_id = 0;
-}
-
-// export const HouseholdContext = createContext(household_id);
