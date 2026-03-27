@@ -1,16 +1,22 @@
 import { useSignup } from "../../hooks/useSignup";
+import { useNavigate } from "react-router-dom";
 import { StyledSignupForm } from "../../styles/forms.styles";
 import { useState } from "react";
 import { Tooltip } from 'react-tooltip';
 import { GoInfo } from "react-icons/go";
 
+
 const SignupForm: React.FC = () => {
   const {signup, error, isLoading} = useSignup();
+  const navigate = useNavigate();
   const handleSignup = async (formData: FormData) => {
     let email = formData.get("email");
     let password = formData.get("password");
     
     await signup(email, password);
+
+    // TODO: check for reference URL
+    navigate('/');
   }
   
   const [householdChecked, setHouseholdChecked] = useState(true);

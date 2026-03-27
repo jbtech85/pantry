@@ -1,20 +1,8 @@
-import { Outlet } from 'react-router-dom'
-import Header from './components/Header/Header'
-import Navbar from './components/Navbar/Navbar'
-import styled from 'styled-components'
+import { Outlet } from "react-router-dom";
+import Header from "./components/Header/Header";
+import Navbar from "./components/Navbar/Navbar";
+import { LayoutDiv } from "./styles/layout.styles";
 
-const LayoutDiv = styled.div`
-  display: flex;
-  height: 100vw;
-
-  > div {
-    width: 100%;
-  }
-
-  nav {
-    width: 200px;
-  }
-`
 
 export default function Layout() {
   return (

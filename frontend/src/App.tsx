@@ -9,15 +9,16 @@ import PastItemsPage from "./pages/PastItemsPage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import { AuthContextProvider } from "./context/userContext";
+import ErrorPage from "./pages/ErrorPage";
 
 const routes = [{
   path: '/',
   element: <Layout />,
-  errorElement: <NotFoundPage />,
   children: [
     {
       path: '/',
-      element: <HomePage />
+      element: <HomePage />,
+      errorElement: <NotFoundPage />
     }, {
       path: '/grocery-list',
       element: <GroceryListPage />
@@ -38,6 +39,9 @@ const routes = [{
     }, {
       path: '/login',
       element: <LoginPage />
+    }, {
+      path: '*',
+      element: <NotFoundPage />
     }
   ]
 }]
