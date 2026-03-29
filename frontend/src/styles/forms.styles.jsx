@@ -12,6 +12,10 @@ export const StyledLoginForm = styled.form`
   label {
     display: block;
     text-align: right;
+
+    input {
+      margin-left: 5px;
+    }
   }
 
   button {
@@ -25,7 +29,6 @@ export const StyledLoginForm = styled.form`
 
   span {
     font-size: 14px;
-
     a {
       color: #2401e8;
     }
@@ -37,14 +40,8 @@ export const StyledLoginForm = styled.form`
     padding-top: 20px;
   }
 
-  div#divRadio {
-    font-size: 12px;
-    span {
-      font-size: 12px;
-    }
-    label {
-      text-align: left;
-    }
+  div#divCheckbox {
+    font-size: 14px;
   }
 `
 
