@@ -1,8 +1,9 @@
 import { useSignup } from "../../hooks/useSignup";
 import { useNavigate } from "react-router-dom";
 import { StyledSignupForm } from "../../styles/forms.styles";
+import { TooltipDiv } from "../../styles/tooltip.styles";
 import { useState } from "react";
-import { Tooltip } from 'react-tooltip';
+import { Tooltip } from "react-tooltip";
 import { GoInfo } from "react-icons/go";
 
 
@@ -37,17 +38,20 @@ const SignupForm: React.FC = () => {
         <input type="password" name="password" />
       </label>
       <br />
-      <div id="divRadio">
+      <div id="divCheckbox">
         <label>
           <input
             type="checkbox"
             checked={householdChecked}
             onChange={handleHouseholdCheckbox}
           /> Create a default household
+          <TooltipDiv>
+            <a data-tooltip-id="default-household-tooltip" data-tooltip-content={checkboxTooltipText}>
+              <GoInfo />
+            </a>
+            <Tooltip id="default-household-tooltip" />
+          </TooltipDiv>
         </label>
-        <a data-tooltip-id="checkboxTooltip" data-tooltip-content={checkboxTooltipText}><GoInfo /></a>
-        <br />
-        <span>Don't worry, you can always add a household later if you need to.  tldr, your pantry/grocery items go in a household.  This helps users share a pantry, and helps users that might live in multiple places.</span>
       </div>
       <br />
       <button disabled={isLoading} type="submit">
