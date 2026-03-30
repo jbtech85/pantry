@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"
 import { useAuthContext } from "./useAuthContext";
 
 export const useSignup = () => {
@@ -7,9 +6,8 @@ export const useSignup = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { dispatch } = useAuthContext();
-  const navigate = useNavigate();
 
-  const signup = async (email: FormDataEntryValue | null, password: FormDataEntryValue | null) => {
+  const signup = async (email: FormDataEntryValue | null, password: FormDataEntryValue | null, createHousehold: boolean) => {
     setIsLoading(true);
 
     // reset on each attempt
@@ -18,7 +16,7 @@ export const useSignup = () => {
     const resp = await fetch('/api/users/signup', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({ email, password, createHousehold })
     });
 
     const json = await resp.json();
@@ -31,10 +29,12 @@ export const useSignup = () => {
       dispatch({type: 'LOGIN', payload: json});
 
       setIsLoading(false);
+      return resp.status;
     } 
     if(!resp.ok) {
       setIsLoading(false);
-      setError(json.error)
+      setError(json.error);
+      return resp.status;
     }
   }
   
