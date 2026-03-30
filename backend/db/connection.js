@@ -1,5 +1,4 @@
 /// File used as connection for controllers
-import { MongoClient, ServerApiVersion } from 'mongodb';
 import { Pool } from 'pg';
 
 

@@ -13,11 +13,14 @@ const SignupForm: React.FC = () => {
   const handleSignup = async (formData: FormData) => {
     let email = formData.get("email");
     let password = formData.get("password");
+    let createHousehold = formData.get("createHousehold")
     
-    await signup(email, password);
+    const respStatus = await signup(email, password, createHousehold);
 
     // TODO: check for reference URL
-    navigate('/');
+    if(respStatus == 200){
+      navigate('/');
+    }
   }
   
   const [householdChecked, setHouseholdChecked] = useState(true);
@@ -44,6 +47,7 @@ const SignupForm: React.FC = () => {
             type="checkbox"
             checked={householdChecked}
             onChange={handleHouseholdCheckbox}
+            name="createHousehold"
           /> Create a default household
           <TooltipDiv>
             <a data-tooltip-id="default-household-tooltip" data-tooltip-content={checkboxTooltipText}>
