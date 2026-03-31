@@ -43,6 +43,15 @@ export const StyledLoginForm = styled.form`
   div#divCheckbox {
     font-size: 14px;
   }
+
+  .error {
+    color: hsl(0, 58%, 50%);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    max-width: 180px;
+    text-align: right;
+  }
 `
 
 export const StyledSignupForm = StyledLoginForm;

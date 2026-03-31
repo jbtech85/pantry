@@ -1,8 +1,18 @@
-import SignupForm from "../components/SignupForm/SignupForm"
+import SignupForm from "../components/SignupForm/SignupForm";
+import { useAuthContext } from "../hooks/useAuthContext";
+import { useNavigate } from "react-router-dom";
 
 const SignupPage: React.FC = () => {
-  return (
-    <SignupForm />
-  )
+  const { user } = useAuthContext();
+  const navigate = useNavigate();
+
+  {user &&
+    navigate('/');}
+
+  if(!user) {
+    return (
+      <SignupForm />
+    )
+  }
 }
 export default SignupPage

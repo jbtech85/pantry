@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 
 export const useSignup = () => {
-  const [error, setError] = useState(null); // Type 'unknown' is not assignable to type 'ReactNode'.ts(2322)
+  const [error, setError] = useState<string | null>(null); // Type 'unknown' is not assignable to type 'ReactNode'.ts(2322)
   const [isLoading, setIsLoading] = useState(false);
 
   const { dispatch } = useAuthContext();
@@ -12,6 +12,13 @@ export const useSignup = () => {
 
     // reset on each attempt
     setError(null);
+
+    if(email === "" || password === "") {
+      console.log("should error");
+      setError("All fields must be completed");
+      setIsLoading(false);
+      return 0;
+    }
 
     const resp = await fetch('/api/users/signup', {
       method: 'POST',

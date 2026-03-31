@@ -2,12 +2,12 @@ import LoginForm from "../components/LoginForm/LoginForm";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useNavigate } from "react-router-dom";
 
-const SignupPage: React.FC = () => {
+const LoginPage: React.FC = () => {
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
   {user &&
-    navigate('/')}
+    navigate('/');}
   
   if(!user){
     return (
@@ -15,4 +15,4 @@ const SignupPage: React.FC = () => {
     )
   }
 }
-export default SignupPage
+export default LoginPage
