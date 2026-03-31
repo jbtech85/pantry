@@ -1,15 +1,19 @@
 import { useLogin } from "../../hooks/useLogin";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { StyledLoginForm } from "../../styles/forms.styles";
 
 const LoginForm = () => {
   const {login, error, isLoading} = useLogin();
-  
+  const navigate = useNavigate();
   const handleLogin = async (formData: FormData) => {
     let email = formData.get("email");
     let password = formData.get("password");
 
-    await login(email, password);
+    const respStatus = await login(email, password);
+
+    if(respStatus == 200) {
+      navigate('/');
+    }
   }
 
 
