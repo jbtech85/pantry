@@ -3,6 +3,7 @@ import cors from 'cors';
 import poolQuery from './db/connection.js';
 import itemRoutes from './routes/itemRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+import householdRoutes from './routes/householdRoutes.js';
 
 const PORT = process.env.SERVER_PORT;
 const app = express();
@@ -23,6 +24,7 @@ app.get('/health', async (req, res) => {
 
 app.use('/items', itemRoutes);
 app.use('/users', userRoutes);
+app.use('/households', householdRoutes);
 
 
 app.listen(PORT, function() {

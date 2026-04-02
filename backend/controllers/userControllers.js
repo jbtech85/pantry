@@ -110,16 +110,15 @@ export const userLogin = async (req, res) => {
       values: [email]
     });
 
+    const incorrectEmailPassword = "Email or password is incorrect";
 
     if(userInfo.data.rows.length > 0) {
       const verified = await verifyPassword(userInfo.data.rows[0].password, password);
-      console.log('Found password: ', userInfo.data.rows[0].password);
-      console.log(`Entered password: ${password}`);
       if(!verified) {
-        throw Error('Email or password is incorrect1');
+        throw Error(incorrectEmailPassword);
       }
     } else {
-      throw Error ('Email or password is incorrect2');
+      throw Error (incorrectEmailPassword);
     }
 
     const token = createToken(userInfo.data.rows[0].account_id);
@@ -128,8 +127,6 @@ export const userLogin = async (req, res) => {
     if(!default_household_fk) {
       default_household_fk = 1;
     }
-
-    console.log(`defaultfk is ${default_household_fk}`);
 
     res.status(200).json({userID, email, default_household_fk, token});
   } catch (err) {
