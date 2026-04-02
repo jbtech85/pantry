@@ -21,24 +21,30 @@ const routes = [{
       errorElement: <NotFoundPage />
     }, {
       path: '/grocery-list',
-      element: <GroceryListPage />
+      element: <GroceryListPage />,
+      errorElement: <NotFoundPage />
     }, {
       path: '/past-items',
-      element: <PastItemsPage />
+      element: <PastItemsPage />,
+      errorElement: <NotFoundPage />
     }, {
       path: '/recipes/:filter?/:filterId?',
       element: <RecipeListPage />,
-      loader: recipeListLoader
+      loader: recipeListLoader,
+      errorElement: <NotFoundPage />
     }, {
       path: '/recipes/name/:name',
       element: <RecipePage />,
-      loader: recipeLoader
+      loader: recipeLoader,
+      errorElement: <NotFoundPage />
     }, {
       path: '/signup',
-      element: <SignupPage />
+      element: <SignupPage />,
+      errorElement: <NotFoundPage />
     }, {
       path: '/login',
-      element: <LoginPage />
+      element: <LoginPage />,
+      errorElement: <NotFoundPage />
     }, {
       path: '*',
       element: <NotFoundPage />
