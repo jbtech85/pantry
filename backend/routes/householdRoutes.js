@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 // get default household
-router.get('/household/default/:account_id', getDefaultHousehold);
+router.get('/default/:account_id', getDefaultHousehold);
 
 
 

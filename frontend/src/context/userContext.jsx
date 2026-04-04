@@ -36,11 +36,11 @@ export const AuthContextProvider = ({ children }) => {
 
     const fetchHousehold = async () => {
       try {
-        const res = await fetch(`/api/household/default/${state.user.userID}`);
+        const res = await fetch(`/api/households/default/${state.user.userID}`);
         const json = await res.json();
 
         // default to 1 if no default household
-        setHouseholdID(json.household_id ?? 1);
+        setHouseholdID(json.defaultHouseholdFK ?? 1);
       } catch (err) {
         console.log('Unable to fetch household: ', err);
         setHouseholdID(1);

@@ -8,12 +8,12 @@ type ItemListItemProps = {
     name: string
   };
   mode: string;
-  onCheckboxChange: (checked: boolean) => void;
+  onCheckboxChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const ItemListItem: React.FC<ItemListItemProps> = (item, mode, onCheckboxChange) => {
+const ItemListItem: React.FC<ItemListItemProps> = ({item, mode, onCheckboxChange}) => {
   return (
-    <ItemLI key={item._id}>
+    <ItemLI>
       <div>
         <div>{item.name}</div>
           {(mode == 'pantry' || mode == 'grocerylist') &&
@@ -24,9 +24,9 @@ const ItemListItem: React.FC<ItemListItemProps> = (item, mode, onCheckboxChange)
             </>
           }
 
-          {(mode == 'past') &&
+          {/* {(mode == 'past') &&
             <ItemListCheckbox onCheckboxChange={onCheckboxChange} item_id={item._id} />
-          }
+          } */}
       </div>
     </ItemLI>
   )

@@ -12,7 +12,7 @@ type ButtonProps = {
   item_id: string
 }
 
-const ItemListButton = ({mode, action, item_id}: ButtonProps) => {
+const ItemListButton: React.FC<ButtonProps> = ({mode, action, item_id}) => {
   const renderIconFn = () => {
     switch(action) {
       case 'transfer': // move to other list, do not remove from current list
