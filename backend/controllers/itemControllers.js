@@ -1,5 +1,3 @@
-import pantryDB from '../db/connection.js';
-// import { ObjectId } from 'mongodb';
 import poolQuery from '../db/connection.js';
 
 
@@ -18,13 +16,15 @@ import poolQuery from '../db/connection.js';
 export const getPantry = async (req, res) => {
   const { household_id } = req.params;
 
-  const { data, status } = await poolQuery(`SELECT name, variation FROM pantry_item WHERE household_id = ${household_id} AND isPantry = true`);
-  
-  if(status == 200) {
-    res.send(data.rows).status(status);
-  } else {
-    console.log(data);
-    res.send(data).status(status);
+  try {
+    const pantryInfo = await poolQuery({
+      text: 'SELECT name, variation FROM item WHERE household_fk = $1 AND isPantry = true',
+      values: [household_id]
+    });
+
+    res.status(200).json({pantryInfo});
+  } catch (err) {
+    res.status(400).json({error: err.message});
   }
 }
 
@@ -100,7 +100,24 @@ export const newItem = async (req,res) => {
   const { household_id } = req.params;
   const { itemName, itemVariation, mode } = req.body;
 
-  //TODO finish writing this controller
+  let isPantry = false;
+  let isGrocery = false;
+  if(mode == "pantry") {
+    isPantry = true;
+  } else if(mode == "grocery") {
+    isGrocery = true;
+  }
+
+  try {
+    const addedItem = await poolQuery({
+      text: 'INSERT INTO item (name, variation, isPantry, isGrocery, household_fk) VALUES ($1, $2, $3, $4, $5) RETURNING name, variation',
+      values: [itemName, itemVariation, isPantry, isGrocery, household_id]
+    });
+
+    res.status(201).json(addedItem.data.rows[0]);
+  } catch (err) {
+    res.status(400).json({error: err.message});
+  }
 }
 
 // prior mongo version for reference

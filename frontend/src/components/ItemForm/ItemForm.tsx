@@ -1,4 +1,4 @@
-import { useActionState } from "react";
+// import { useActionState } from "react";
 
 import { useQueryClient } from "@tanstack/react-query";
 import { useContext } from "react";
@@ -16,7 +16,7 @@ type addItemParams = {
 
 const ItemForm: React.FC<ItemFormProps> = ({ mode }) => {
   const queryClient = useQueryClient();
-  const household_id = useContext(HouseholdContext);
+  const { householdID } = useContext(HouseholdContext);
 
   // TODO
   // Begin by checking for a local cache of all items a user has
@@ -25,6 +25,7 @@ const ItemForm: React.FC<ItemFormProps> = ({ mode }) => {
 
   // the core add function that calls our API
   const addItem = async (formData: FormData) => {
+    console.log("adding item");
     let itemName = formData.get("item");
     let itemVariation = formData.get("variation");
 
@@ -33,7 +34,8 @@ const ItemForm: React.FC<ItemFormProps> = ({ mode }) => {
     let resp;
     // If truly new item, create new item
     if(/*creating a new item*/ 1 == 1) {
-      resp = await fetch(`/api/items/household/${household_id}`, {
+      console.log("1 == 1");
+      resp = await fetch(`/api/items/household/${householdID}`, {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify({
@@ -46,7 +48,7 @@ const ItemForm: React.FC<ItemFormProps> = ({ mode }) => {
       // If existing item, update item accordingly
       // For simplicity and code re-use, going to lean on past item logic
       let item_id = ''; // whatever ID we found in our duplicate check
-      resp = await fetch(`/api/househod/${household_id}/item/${item_id}`, {
+      resp = await fetch(`/api/household/${householdID}/item/${item_id}`, {
         method: 'PUT',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify({

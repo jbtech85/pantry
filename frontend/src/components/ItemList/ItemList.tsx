@@ -1,9 +1,8 @@
-import { ItemLI } from "./ItemList.styles";
-import ItemListButton from "./ItemListButton/ItemListButton";
 import { useState, useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { HouseholdContext } from "../../context/userContext";
-import ItemListCheckbox from "./ItemListCheckbox/ItemListCheckbox";
+import ItemListItem from "./ItemListItem/ItemListItem";
+
 
 type itemType = {
   _id: string;
@@ -31,57 +30,42 @@ const ItemList: React.FC<ItemListProps> = ({mode}) => {
 
   // TODO: will need to differentiate between default household and selectedhousehold, probably within context and affected by a dropdown
 
-  // if user is logged in, and a household is selected
-  if(householdID > 1) {
-    // Grab data from our data source via Tanstack
-    const pantryQry = useQuery({
-      queryKey: [`${mode}Items`],
-      queryFn: async () => {
-        const mongoItems = `/api/items/household/${householdID}/${mode}`;
+  // Grab data from our data source via Tanstack
+  const pantryQry = useQuery({
+    queryKey: [`${mode}Items`],
+    queryFn: async () => {
+      const mongoItems = `/api/items/household/${householdID}/${mode}`;
 
-        let fetchedItems = mongoItems;
-        const response = await fetch(fetchedItems);
-        if(!response.ok){
-          throw new Error("No items found. Please add items and try again.");
-        }
-        return response.json();
+      let fetchedItems = mongoItems;
+      const response = await fetch(fetchedItems);
+      if(!response.ok){
+        throw new Error("No items found. Please add items and try again.");
       }
-    });
+      return response.json();
+    },
+    enabled: householdID > 1 // only run when user is logged in, and a household is selected
+  });
 
-    if(pantryQry.isLoading) {
-      return <div>Loading...</div>
-    }
-    
-    if(pantryQry.isError) {
-      return <div>{pantryQry.error.message}</div>;
-    }
+  if(pantryQry.isLoading) {
+    return <div>Loading...</div>
+  }
+  
+  if(pantryQry.isError) {
+    return <div>{pantryQry.error.message}</div>;
+  }
 
+  if(householdID > 1 && pantryQry.data.rows > 0) {
     return (
       <ul>
         {pantryQry.data.map((item: itemType) => (
-          <ItemLI key={item._id}>
-            <div>
-              <div>{item.name}</div>
-                {(mode == 'pantry' || mode == 'grocerylist') &&
-                  <>
-                    <ItemListButton mode={mode} action='duplicate' item_id={item._id} />
-                    <ItemListButton mode={mode} action='transfer' item_id={item._id} />
-                    <ItemListButton mode={mode} action='remove' item_id={item._id} />
-                  </>
-                }
-
-                {(mode == 'past') &&
-                  <ItemListCheckbox onCheckboxChange={onCheckboxChange} item_id={item._id} />
-                }
-            </div>
-
-          </ItemLI>
+          <ItemListItem key={item._id} item={item} mode={mode} onCheckboxChange={onCheckboxChange} />
         ))}
       </ul>
-    )}
-  // if user is anonymous
-  else if(householdID == 0) {
-    // check locale storage
+    )
   }
+
+  // if user is anonymous
+    // check locale storage
+  
 }
 export default ItemList 
