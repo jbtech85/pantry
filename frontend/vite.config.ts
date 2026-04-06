@@ -21,7 +21,7 @@ export default defineConfig(({ mode }) => {
     server: {
       proxy: {
         '/api': {
-          target: `http://pantryapi:${env.SERVER_PORT}`,
+          target: `http://localhost:${serverPort}`,
           changeOrigin:true,
           rewrite: (path) => path.replace(/^\/api/,'')
         }        
@@ -31,6 +31,9 @@ export default defineConfig(({ mode }) => {
       host: true,
       watch: {
         usePolling: true
+      },
+      headers: {
+        'Content-Type': 'application/javascript'
       }
     }
   };
