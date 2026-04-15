@@ -13,7 +13,6 @@ app.use(express.json());
 
 
 app.get('/health', async (req, res) => {
-  console.log('connection attempted');
   try {
     await poolQuery('SELECT 0 FROM account');
     res.status(200).json({ status: 'ok' });
