@@ -29,3 +29,4 @@ backend/node_modules
 backend/data
 frontend/node_modules
 .env
+frontend/cypress.env.json
