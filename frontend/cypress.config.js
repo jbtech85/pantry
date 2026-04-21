@@ -1,10 +1,16 @@
-import { defineConfig } from "cypress";
+const { defineConfig } = require('cypress');
 
-export default defineConfig({
+try {
+  require('dotenv').config({ path: '../.env' });
+} catch {
+  // dotenv not available in Docker, env vars injected by compose
+}
+
+module.exports = defineConfig({
   allowCypressEnv: false,
 
   e2e: {
-    baseUrl: `http://localhost:5100`,
+    baseUrl: process.env.CYPRESS_baseUrl,
     chromeWebSecurity: false,
     setupNodeEvents(on, config) {
       // implement node event listeners here
@@ -12,11 +18,11 @@ export default defineConfig({
   },
 });
 
-// previous file from root, cypress.config.js, deprecated
-// for reference only
 
-// 
-// module.exports = {
+
+// import { defineConfig } from "cypress";
+
+// export default defineConfig({
 //   allowCypressEnv: false,
 
 //   e2e: {
@@ -26,4 +32,5 @@ export default defineConfig({
 //       // implement node event listeners here
 //     },
 //   },
-// };
+// });
+

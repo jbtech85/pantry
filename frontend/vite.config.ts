@@ -6,8 +6,8 @@ import path from 'path'
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, path.resolve(process.cwd(), '..'), '');
-  const clientPort = env.CLIENT_PORT || process.env.CLIENT_PORT;
-  const serverPort = env.SERVER_PORT || process.env.SERVER_PORT;
+  const clientPort = parseInt(env.CLIENT_PORT || process.env.CLIENT_PORT!);
+  const serverPort = parseInt(env.SERVER_PORT || process.env.SERVER_PORT!);
 
   return {
     base: "/",
@@ -21,7 +21,7 @@ export default defineConfig(({ mode }) => {
     server: {
       proxy: {
         '/api': {
-          target: `http://localhost:${serverPort}`,
+          target: `http://api:${serverPort}`,
           changeOrigin:true,
           rewrite: (path) => path.replace(/^\/api/,'')
         }        
@@ -29,11 +29,9 @@ export default defineConfig(({ mode }) => {
       port: clientPort,
       strictPort: true,
       host: true,
+      allowedHosts: ['client', 'pantryclient'],
       watch: {
         usePolling: true
-      },
-      headers: {
-        'Content-Type': 'application/javascript'
       }
     }
   };

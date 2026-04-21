@@ -123,7 +123,7 @@ export const userLogin = async (req, res) => {
 
     const token = createToken(userInfo.data.rows[0].account_id);
     const userID = userInfo.data.rows[0].account_id;
-    const default_household_fk = userInfo.data.rows[0].default_household_fk;
+    var default_household_fk = userInfo.data.rows[0].default_household_fk;
     if(!default_household_fk) {
       default_household_fk = 1;
     }

@@ -1,9 +1,12 @@
 name: Testing Cypress
 
-on: [workflow_dispatch]
+on:
+  push:
+    branches:
+      - stage
 
 jobs:
-  run-cypress:
+  cypress-test:
     runs-on: ubuntu-24.04
 
     services:
@@ -45,8 +48,8 @@ jobs:
             echo "${{secrets.A_WHOLE_ENV_FILE }}" > .env
             npm run dev &
             echo "Waiting for server to be ready"
-            while ! nc -z localhost ${{ secrets.SERVER_PORT }}; do
-              echo "Waiting for server"
+            while ! curl -sf http://localhost:${{ secrets.SERVER_PORT }}/health; do
+              echo "Waiting for server and DB"
               sleep 5
             done
 
@@ -54,4 +57,10 @@ jobs:
           uses: cypress-io/github-action@v6
           with:
             working-directory: ./frontend 
-            wait-on: 'http://localhost:${{ secrets.CLIENT_PORT }}/api/health'
+            start: npm run dev
+            wait-on: 'http://localhost:${{ secrets.CLIENT_PORT }}, http://localhost:${{ secrets.SERVER_PORT }}/health'
+          env:
+              CYPRESS_baseUrl: http://localhost:${{ secrets.CLIENT_PORT }}
+              CLIENT_PORT: ${{ secrets.CLIENT_PORT }}
+              SERVER_PORT: ${{ secrets.SERVER_PORT }}
+  

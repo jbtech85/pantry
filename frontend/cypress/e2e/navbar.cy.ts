@@ -2,7 +2,7 @@ describe('Navbar', () => {
   it('contains ', () => {
     cy.visit('/');
 
-    cy.get('nav', {timeout: 10000 }).should('be.visible');
+    cy.get('nav', {timeout: 5000 }).should('be.visible');
 
     const expectedNavItems = ['Pantry', 'Grocery List', 'Past Items', 'Recipes'];
 
