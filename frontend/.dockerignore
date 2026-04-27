@@ -1,2 +1,21 @@
+# dependencies, installed fresh in container
 node_modules
 npm-debug.log
+
+# build output, built fresh in container
+dist
+
+.env
+.env.*
+
+cypress
+cypress.config.ts
+coverage
+
+.git
+.gitignore
+
+DS_Store
+Thumbs.db
+
+logs
