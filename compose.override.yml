@@ -1,0 +1,66 @@
+services:
+  client:
+    build:
+      context: ./frontend
+      target: development
+    env_file:
+      - .env
+    ports:
+      - "${CLIENT_PORT}:${CLIENT_PORT}"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:${CLIENT_PORT} || exit 1"]
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend
+          target: /client
+          initial_sync: true
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: ./frontend/package.json
+
+  api:
+    build:
+      context: ./backend
+      target: development
+    env_file:
+      - .env
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    restart: unless-stopped
+    develop:
+      watch:
+        - action: sync
+          path: ./backend
+          target: /api
+          initial_sync: true
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: ./backend/package.json
+
+  postgres:
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    restart: unless-stopped
+
+  
+  e2e:
+    profiles:
+      - testing
+    image: cypress/included:14.0.0
+    container_name: cypress
+    networks:
+      - pantry-network
+    working_dir: /app
+    depends_on:
+      client:
+        condition: service_healthy
+    environment:
+      - CYPRESS_baseUrl=http://client:${CLIENT_PORT}
+    command: npx cypress run
+    volumes:
+      - ./frontend/cypress:/app/cypress
+      - ./frontend/cypress.config.js:/app/cypress.config.js

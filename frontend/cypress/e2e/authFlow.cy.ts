@@ -14,7 +14,11 @@ describe('Auth Flow', () => {
   }
 
 
-  // failed login
+  /*********** failed logins **************/
+  // malformed email
+
+
+  // invalid credentials
   it('fails to sign in via invalid credentials', () => {
     cy.visit('/');
     cy.contains('a','Login').click();
@@ -23,7 +27,7 @@ describe('Auth Flow', () => {
     cy.get('input[type="password"').type("1234");
     cy.get('button[type="submit"]').click();
 
-    
+    cy.get('span.formError').should('be.visible').and('contain', 'Email or password is incorrect');
   });
 
 });
