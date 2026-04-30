@@ -5,7 +5,7 @@ import { Pool } from 'pg';
 /************ postgresql ***********/
 // set up postgres Pool
 export const pgPool = new Pool({
-  host: "pantrypg",
+  host: process.env.POSTGRES_HOST,
   port: 5432,
   user: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,

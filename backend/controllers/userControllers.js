@@ -4,7 +4,7 @@ import * as argon2 from "argon2";
 import poolQuery, { pgPool } from '../db/connection.js';
 
 const createToken = (_id) => {
-  return jwt.sign({_id}, process.env.SECRET, { expiresIn: '2d' })
+  return jwt.sign({_id}, process.env.JWT_SECRET, { expiresIn: '2d' })
 }
 
 const hashPassword = async (password) => {

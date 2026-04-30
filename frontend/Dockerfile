@@ -34,7 +34,14 @@ COPY . .
 RUN npm run build
 
 
-#### Stage 3 - production
+#### Stage 3 - development  
+FROM deps AS development
+WORKDIR /client
+COPY . .
+EXPOSE 5100
+CMD ["npm", "run", "dev"]
+
+#### Stage 4 - production
 # minimal nginx image; no Node / source code / dependenices
 # nginx starts as root to bind port 80, drops to nginx user for worker processes automatically
 FROM nginx:alpine AS production
