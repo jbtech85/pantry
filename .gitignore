@@ -30,3 +30,5 @@ backend/data
 frontend/node_modules
 .env
 frontend/cypress.env.json
+
+frontend/cypress/screenshots
