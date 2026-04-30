@@ -27,8 +27,6 @@ services:
       target: development
     env_file:
       - .env
-    ports:
-      - "${SERVER_PORT}:${SERVER_PORT}"
     restart: unless-stopped
     develop:
       watch:

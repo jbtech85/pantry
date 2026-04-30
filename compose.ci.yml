@@ -1,0 +1,15 @@
+services:
+  client:
+    build:
+      context: ./frontend
+      target: production
+    ports:
+      - "${CLIENT_PORT}:80"
+
+  api:
+    build:
+      context: ./backend
+      target: production
+
+  postgres:
+    restart: unless-stopped
