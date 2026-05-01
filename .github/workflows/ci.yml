@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - stage
+  workflow_dispatch:
 
 jobs:
   cypress-test:
@@ -28,6 +29,7 @@ jobs:
       - name: Build and start stack
         run: docker compose -f compose.yml -f compose.ci.yml up -d --build
 
+        # we're leaning on compose to perform health checks across dependences, with pantryclient being the last in line
       - name: Wait for stack to be healthy
         run: |
           echo "Wait 2 min for all services to be healthy"
