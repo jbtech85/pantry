@@ -5,9 +5,7 @@ type keyValType = {
 }
 
 type recipeInfoType = {
-  meals: {
-    0: keyValType[];
-  }
+  meals:  keyValType[];
 }
 
 type paramsType = {
@@ -29,7 +27,7 @@ export default function RecipePage() {
   const mealInfo = (recipeInfo as recipeInfoType).meals[0];
 
 
-  let dynamicVar: string = 'strMeal';
+  // let dynamicVar: string = 'strMeal';
   // console.log(mealInfo[dynamicVar]);
 
   // console.log(mealInfo);
@@ -66,7 +64,7 @@ export default function RecipePage() {
       <h2>Ingredients</h2>
       <ul>
         {Object.entries(ingredients).map(([key, val]) => (
-          <li key={key}>{val}</li>
+          <li key={key}>{val as string}</li>
         ))}
       </ul>
     </>
