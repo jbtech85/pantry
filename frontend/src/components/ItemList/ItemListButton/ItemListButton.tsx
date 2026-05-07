@@ -3,8 +3,7 @@ import { TiDeleteOutline } from "react-icons/ti";
 import { RiFilePaper2Line } from "react-icons/ri";
 import { LuCopyPlus } from "react-icons/lu";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useContext } from "react";
-import { HouseholdContext } from "../../../context/userContext";
+import { useHouseholdContext } from "../../../hooks/useHouseholdContext";
 
 type ButtonProps = {
   mode: string,
@@ -51,9 +50,9 @@ const ItemListButton: React.FC<ButtonProps> = ({mode, action, item_id}) => {
     }
   });
 
-  const household_id = useContext(HouseholdContext);
+  const { householdID } = useHouseholdContext();
   return (
-    <button onClick={() => updateItem.mutate({ household_id:`${household_id}`, item_id:item_id })}>
+    <button onClick={() => updateItem.mutate({ household_id:`${householdID}`, item_id:item_id })}>
       {renderIconFn()}
     </button>
   )

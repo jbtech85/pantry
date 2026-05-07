@@ -1,8 +1,7 @@
 // import { useActionState } from "react";
 
 import { useQueryClient } from "@tanstack/react-query";
-import { useContext } from "react";
-import { HouseholdContext } from "../../context/userContext";
+import { useHouseholdContext } from "../../hooks/useHouseholdContext";
 
 type ItemFormProps = {
   mode: string
@@ -16,7 +15,7 @@ type addItemParams = {
 
 const ItemForm: React.FC<ItemFormProps> = ({ mode }) => {
   const queryClient = useQueryClient();
-  const { householdID } = useContext(HouseholdContext);
+  const { householdID } = useHouseholdContext();
 
   // TODO
   // Begin by checking for a local cache of all items a user has

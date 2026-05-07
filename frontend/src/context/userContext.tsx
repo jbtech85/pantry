@@ -44,14 +44,15 @@ const authReducer = (state: { user: UserType | null }, action: AuthActionType) =
 }
 
 
-export const AuthContextProvider = ({ children }) => {
+export const AuthContextProvider = ({ children }: { children: React.ReactNode}) => {
   const [state, dispatch] = useReducer(authReducer, {user: null});
   const [householdID, setHouseholdID] = useState(0);
 
   // restore user from localStorage on mount
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('pantrydata_user'));
-    if(user){
+    const storedUser = localStorage.getItem('pantrydata_user');
+    if(storedUser){
+      const user = JSON.parse(storedUser);
       dispatch({ type: 'LOGIN', payload: user });
     }
   }, []);
@@ -65,7 +66,7 @@ export const AuthContextProvider = ({ children }) => {
 
     const fetchHousehold = async () => {
       try {
-        const res = await fetch(`/api/households/default/${state.user.userID}`);
+        const res = await fetch(`/api/households/default/${(state.user as UserType).userID}`);
         const json = await res.json();
 
         // default to 1 if no default household
