@@ -1,9 +1,38 @@
 import { createContext, useReducer, useEffect, useState } from 'react';
 
-export const AuthContext = createContext();
-export const HouseholdContext = createContext();
 
-const authReducer = (state, action) => {
+type UserType = {
+  email: string;
+  userID: number;
+  token: string;
+}
+
+type LoginActionType = {
+  type: 'LOGIN';
+  payload: UserType;
+}
+
+type LogoutActionType = {
+  type: 'LOGOUT';
+}
+
+type AuthActionType = LoginActionType | LogoutActionType;
+
+type AuthContextType = {
+  user: UserType | null;
+  dispatch: React.Dispatch<AuthActionType>
+}
+
+type HouseholdContextType = {
+  householdID: number;
+  setHouseholdID: React.Dispatch<React.SetStateAction<number>>;
+}
+
+
+export const AuthContext = createContext<AuthContextType | null>(null);
+export const HouseholdContext = createContext<HouseholdContextType | null>(null);
+
+const authReducer = (state: { user: UserType | null }, action: AuthActionType) => {
   switch (action.type) {
     case 'LOGIN':
       return { user: action.payload }
