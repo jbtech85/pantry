@@ -3,7 +3,7 @@ import GroceryList from "../components/GroceryList/GroceryList";
 const GroceryListPage = () => {
   return (
     <div>
-      <GroceryList household_id="1" />
+      <GroceryList />
     </div>
   )
 }

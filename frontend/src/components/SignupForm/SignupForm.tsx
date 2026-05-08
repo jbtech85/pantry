@@ -2,7 +2,6 @@ import { useSignup } from "../../hooks/useSignup";
 import { useNavigate } from "react-router-dom";
 import { StyledSignupForm } from "../../styles/forms.styles";
 import { TooltipDiv } from "../../styles/tooltip.styles";
-import { useState } from "react";
 import { Tooltip } from "react-tooltip";
 import { GoInfo } from "react-icons/go";
 
@@ -13,7 +12,7 @@ const SignupForm: React.FC = () => {
   const handleSignup = async (formData: FormData) => {
     let email = formData.get("email");
     let password = formData.get("password");
-    let createHousehold = formData.get("createHousehold")
+    let createHousehold = formData.get("createHousehold") === 'on';
     
     const respStatus = await signup(email, password, createHousehold);
 
@@ -23,10 +22,6 @@ const SignupForm: React.FC = () => {
     }
   }
   
-  const [householdChecked, setHouseholdChecked] = useState(true);
-  const handleHouseholdCheckbox = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setHouseholdChecked(event.target.checked);
-  };
 
   // if lang == english
   let checkboxTooltipText = "Households are what items go into.  This helps users share a list, and helps users that might need multiple lists.  Don't worry, you can always add additional households later if you don't add one now!  If you aren't joining someone elses, you will need to create your own to use the app features."
@@ -45,8 +40,6 @@ const SignupForm: React.FC = () => {
         <label>
           <input
             type="checkbox"
-            checked={householdChecked}
-            onChange={handleHouseholdCheckbox}
             name="createHousehold"
           /> Create a default household
           <TooltipDiv>
