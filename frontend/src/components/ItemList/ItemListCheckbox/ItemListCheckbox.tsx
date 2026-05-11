@@ -6,7 +6,7 @@ type CheckboxProps = {
 
 const ItemListCheckbox = ({isChecked, onCheckboxChange, item_id}: CheckboxProps) => {
   return (
-    <input type="checkbox" checked={isChecked} onChange={onCheckboxChange} item_id={item_id} />
+    <input type="checkbox" checked={isChecked} onChange={onCheckboxChange} itemID={item_id} />
   )
 }
 export default ItemListCheckbox

@@ -1,6 +1,5 @@
 import { useState, useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { HouseholdContext } from "../../context/userContext";
 import ItemListItem from "./ItemListItem/ItemListItem";
 import { useHouseholdContext } from "../../hooks/useHouseholdContext";
 
@@ -25,7 +24,7 @@ const ItemList: React.FC<ItemListProps> = ({mode}) => {
     }
   }
 
-  const { householdID, setHouseholdID } = useHouseholdContext();  
+  const { householdID } = useHouseholdContext();  
 
   console.log(`household_id: ${householdID}`);
 
