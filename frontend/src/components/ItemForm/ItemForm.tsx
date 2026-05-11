@@ -7,11 +7,12 @@ type ItemFormProps = {
   mode: string
 }
 
+/* TODO: utilize or delete
 type addItemParams = {
   household_id: string,
   item_name: string,
   item_variation?: string
-}
+} */
 
 const ItemForm: React.FC<ItemFormProps> = ({ mode }) => {
   const queryClient = useQueryClient();

@@ -1,5 +1,5 @@
 import { ButtonDiv } from "./LoginButton.styles";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useLogout } from "../../hooks/useLogout";
 import { useAuthContext } from '../../hooks/useAuthContext';
 
@@ -17,17 +17,13 @@ const LoginButton = () => {
   }
 
   return (
-      <>
-        <ButtonDiv>
-          {!user &&
-            <Link to='/login'>Login</Link> }
-          
-          {user &&
-            <button onClick={handleClick}>Logout</button> }
-        </ButtonDiv>
-      </>
+    <ButtonDiv>
+      {!user &&
+        <Link to='/login'>Login</Link> }
       
-      // <button onClick={() => navigate('/login')}>{isAuthed ? "Log out" : "Log in"}</button>
+      {user &&
+        <button onClick={handleClick}>Logout</button> }
+    </ButtonDiv>
   )
 };
 export default LoginButton

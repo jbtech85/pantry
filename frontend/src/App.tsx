@@ -14,37 +14,31 @@ import ErrorPage from "./pages/ErrorPage";
 const routes = [{
   path: '/',
   element: <Layout />,
+  errorElement: <ErrorPage />,
   children: [
     {
       path: '/',
       element: <HomePage />,
-      errorElement: <NotFoundPage />
     }, {
       path: '/grocery-list',
       element: <GroceryListPage />,
-      errorElement: <NotFoundPage />
     }, {
       path: '/past-items',
       element: <PastItemsPage />,
-      errorElement: <NotFoundPage />
     }, {
       path: '/recipes/:filter?/:filterId?',
       element: <RecipeListPage />,
       loader: recipeListLoader,
-      errorElement: <NotFoundPage />
     }, {
       path: '/recipes/name/:name',
       element: <RecipePage />,
       loader: recipeLoader,
-      errorElement: <NotFoundPage />
     }, {
       path: '/signup',
       element: <SignupPage />,
-      errorElement: <NotFoundPage />
     }, {
       path: '/login',
       element: <LoginPage />,
-      errorElement: <NotFoundPage />
     }, {
       path: '*',
       element: <NotFoundPage />

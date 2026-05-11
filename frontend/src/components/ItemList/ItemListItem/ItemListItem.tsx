@@ -24,9 +24,9 @@ const ItemListItem: React.FC<ItemListItemProps> = ({item, mode, onCheckboxChange
             </>
           }
 
-          {/* {(mode == 'past') &&
-            <ItemListCheckbox onCheckboxChange={onCheckboxChange} item_id={item._id} />
-          } */}
+          {(mode == 'past') &&
+            <ItemListCheckbox onCheckboxChange={onCheckboxChange} isChecked item_id={item._id} />
+          }
       </div>
     </ItemLI>
   )
