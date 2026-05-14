@@ -1,5 +1,17 @@
 {
-  "dependencies": {
-    "react-tooltip": "^5.30.0"
+  "name": "pantry",
+  "version": "1.0.0",
+  "description": "Kitchen management tool",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "pnpm -r run start"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^11.1.1",
+      "onFail": "download"
+    }
   }
 }
