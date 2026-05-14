@@ -25,10 +25,9 @@ dist-ssr
 notes
 
 database
-backend/node_modules
-backend/data
-frontend/node_modules
+apps/api/node_modules
+apps/api/data
+apps/desktop/node_modules
 .env
-frontend/cypress.env.json
-
-frontend/cypress/screenshots
+apps/desktop/cypress.env.json
+apps/desktop/cypress/screenshots

@@ -1,7 +1,7 @@
 services:
   client:
     build:
-      context: ./frontend
+      context: ./apps/desktop
       target: development
     env_file:
       - .env
@@ -13,17 +13,17 @@ services:
     develop:
       watch:
         - action: sync
-          path: ./frontend
+          path: ./apps/desktop
           target: /client
           initial_sync: true
           ignore:
             - node_modules/
         - action: rebuild
-          path: ./frontend/package.json
+          path: ./apps/desktop/package.json
 
   api:
     build:
-      context: ./backend
+      context: ./apps/api
       target: development
     env_file:
       - .env
@@ -31,13 +31,13 @@ services:
     develop:
       watch:
         - action: sync
-          path: ./backend
+          path: ./apps/api
           target: /api
           initial_sync: true
           ignore:
             - node_modules/
         - action: rebuild
-          path: ./backend/package.json
+          path: ./apps/api/package.json
 
   postgres:
     ports:
@@ -60,5 +60,5 @@ services:
       - CYPRESS_baseUrl=http://client:${CLIENT_PORT}
     command: npx cypress run
     volumes:
-      - ./frontend/cypress:/app/cypress
-      - ./frontend/cypress.config.js:/app/cypress.config.js
+      - ./apps/desktop/cypress:/app/cypress
+      - ./apps/desktop/cypress.config.js:/app/cypress.config.js
