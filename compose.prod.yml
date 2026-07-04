@@ -1,7 +1,9 @@
+# production-specific configs
+
 services:
   client:
     build:
-      context: ./frontend
+      context: ./apps/desktop
       target: production
     env_file:
       - .env
@@ -11,7 +13,7 @@ services:
 
   api:
     build:
-      context: ./backend
+      context: ./apps/api
       target: production
     env_file:
       - .env
