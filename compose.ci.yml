@@ -1,7 +1,9 @@
+# for testing against a production-like environment in our CI
+
 services:
   client:
     build:
-      context: ./frontend
+      context: ./apps/desktop
       target: production
     env_file:
       - .env
@@ -10,7 +12,7 @@ services:
 
   api:
     build:
-      context: ./backend
+      context: ./apps/api
       target: production
     env_file:
       - .env

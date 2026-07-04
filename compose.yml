@@ -1,3 +1,5 @@
+# baseline file used across environments
+
 name: pantry
 
 services:
