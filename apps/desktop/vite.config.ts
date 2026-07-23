@@ -5,7 +5,7 @@ import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, path.resolve(process.cwd(), '..'), '');
+  const env = loadEnv(mode, path.resolve(process.cwd(), '../..'), '');
   const clientPort = parseInt(env.CLIENT_PORT || process.env.CLIENT_PORT!);
   const serverPort = parseInt(env.SERVER_PORT || process.env.SERVER_PORT!);
 

@@ -44,7 +44,7 @@ jobs:
       - name: run Cypress
         uses: cypress-io/github-action@v6
         with:
-          working-directory: ./frontend 
+          working-directory: ./apps/desktop 
           config: baseUrl=http://localhost:${{ secrets.CLIENT_PORT }}
   
       - name: Collect logs on failure

@@ -4,9 +4,10 @@
 ARG NODE_VERSION=24-alpine
 FROM node:${NODE_VERSION} AS deps-dev
 WORKDIR /api
-COPY package*.json ./
-RUN --mount=type=cache,target=/root/.npm,sharing=locked \
-    npm ci
+RUN corepack enable && corepack prepare pnpm@11.1.1 --activate
+COPY package.json pnpm-lock.yaml ./
+RUN --mount=type=cache,target=/root/.local/share/pnpm/store,sharing=locked \
+    pnpm install --frozen-lockfile
 
 
 ### Stage 2 - development   
@@ -14,7 +15,7 @@ FROM deps-dev AS development
 WORKDIR /api
 COPY . .
 EXPOSE 4100
-CMD ["npm", "run", "dev"]
+CMD ["pnpm", "run", "dev"]
 
 
 #### Stage 3 - dependencies (production)
@@ -23,12 +24,13 @@ ARG NODE_VERSION=24-alpine
 # This layer only rebuilds when package.json changes, not on every source change
 FROM node:${NODE_VERSION} AS deps
 WORKDIR /api
-# Copies package.json and package-lock.json into WORKDIR, from the directory this Dockerfile is inside of
-COPY package*.json ./
-# persist npm's download cache between builds
+RUN corepack enable && corepack prepare pnpm@11.1.1 --activate
+# Copies package.json and pnpm-lock.yaml into WORKDIR, from the directory this Dockerfile is inside of
+COPY package.json pnpm-lock.yaml ./
+# persist pnpm's download cache between builds
 # use automated environment version (ci), skip dev dependencies for Prod
-RUN --mount=type=cache,target=/root/.npm,sharing=locked \
-    npm ci --omit=dev
+RUN --mount=type=cache,target=/root/.local/share/pnpm/store,sharing=locked \
+    pnpm install --frozen-lockfile --prod
 
 
 #### Stage 4 - production
