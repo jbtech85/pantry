@@ -31,3 +31,5 @@ apps/desktop/node_modules
 .env
 apps/desktop/cypress.env.json
 apps/desktop/cypress/screenshots
+
+node_modules

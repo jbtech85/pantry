@@ -5,13 +5,18 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "pnpm -r run start"
+    "dev": "concurrently \"docker compose up --watch\" \"expo start\"",
+    "dev:desktop": "docker compose up --watch",
+    "dev:mobile": "concurrently \"docker compose up api postgres --watch\" \"expo start\""
   },
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
-      "version": "^11.1.1",
+      "version": "11.1.1",
       "onFail": "download"
     }
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.3"
   }
 }

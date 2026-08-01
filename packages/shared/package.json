@@ -1,0 +1,7 @@
+{
+  "name": "@pantry/shared",
+  "version": "1.0.0",
+  "description": "Shared logic, hooks, context, and types for app",
+  "main": "index.js",
+  "type": "module"
+}

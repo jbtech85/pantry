@@ -1,7 +1,7 @@
 const { defineConfig } = require('cypress');
 
 try {
-  require('dotenv').config({ path: '../.env' });
+  require('dotenv').config({ path: '../../.env' });
 } catch {
   // dotenv not available in Docker, env vars injected by compose
 }
@@ -20,6 +20,7 @@ module.exports = defineConfig({
 
 
 
+////// this is sitting here in case I ever change the module type and don't want to hunt down this syntax
 // import { defineConfig } from "cypress";
 
 // export default defineConfig({
